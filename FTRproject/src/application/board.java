@@ -36,7 +36,7 @@ public class board {
 			}
 			System.out.println();
 		}
-		System.out.println();
+		
 		for (int k = 0; k < x; k++) {
 			System.out.print("--");
 
