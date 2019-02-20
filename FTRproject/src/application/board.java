@@ -5,52 +5,57 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Random;
 
 public class board {
 
 	static int x = 10;
-	static int testnum = 50;
+	static int testnum = 10;
 
 
 	public static void main(String[] args) throws IOException {
-		GridNode[][] gridBoard = initial();
-		GridNode A = randomAT(gridBoard);
-		A.setStatus('A');
-		GridNode T = randomAT(gridBoard);
-		T.setStatus('T');
-		// printGridPane(gridBoard);
-		printMap(gridBoard);
+//		GridNode[][] gridBoard = initial();
+//		printMap(gridBoard);
 		// System.out.println(A.getX()+", "+ A.getY());
 		// System.out.println(T.getX()+", "+ T.getY());
-		FileOut(gridBoard);
+		int i;
+		for(i=0;i<testnum;i++) {
+			GridNode[][] gridBoard = initial();
+			printMap(gridBoard);
+			FileOut(gridBoard);
+		}
+//		FileOut(gridBoard);
 
 	}
 
 	public static void FileOut(GridNode[][] gridBoard) throws IOException {
+		
 		Writer writer = null;
 		try {
-			for (int k = 0; k < x; k++) {
+			for (int k = 0; k < testnum; k++) {
 				String s = "src/TestCases/Test" + k + ".txt";
 				System.out.println(s);
-				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(s), "utf-8"));
+				PrintWriter fileWriter = new PrintWriter(s, "UTF-8");
+				//writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(s), "utf-8"));
 				// write line by line
 				for (int i = 0; i < x; i++) {
 					for (int j = 0; j < x; j++) {
-						if (gridBoard[i][j].getStatus()=='A') {
-							String msg = i + " " + j + " " + " " + gridBoard[i][j].isBlocked() + "A"+" ";
-							writer.write(msg);
+						if (gridBoard[i][j].getStatus() == 'A') {
+							String msg = i + " " + j + " " + " " + gridBoard[i][j].getStatus() + "\n";
+							fileWriter.write(msg);
 						} else if (gridBoard[i][j].getStatus() == 'T') {
-							String msg = i + " " + j + " " + " " + gridBoard[i][j].isBlocked() + "T";
-							writer.write(msg);
+							String msg = i + " " + j + " " + " " + gridBoard[i][j].getStatus() + "\n";
+							fileWriter.write(msg);
 						} else {
 							// normal node
-							String msg = i + " " + j + " " + " " + gridBoard[i][j].isBlocked() + "N";
-							writer.write(msg);
+							String msg = i + " " + j + " " + " " + gridBoard[i][j].getStatus() + "\n";
+							fileWriter.write(msg);
 						}
 					}
 				}
+				fileWriter.close();
 			}
 		} catch (IOException ex) {
 			System.out.println("IOException");
@@ -112,6 +117,10 @@ public class board {
 
 			}
 		}
+		GridNode A = randomAT(gridBoard);
+		A.setStatus('A');
+		GridNode T = randomAT(gridBoard);
+		T.setStatus('T');
 		return gridBoard;
 	}
 

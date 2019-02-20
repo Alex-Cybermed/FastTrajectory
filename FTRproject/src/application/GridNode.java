@@ -12,29 +12,23 @@ public class GridNode {
 	private int f;
 	private int h;
 
-
 	public GridNode(int X, int Y, char status) {
 		this.X = X;
 		this.Y = Y;
 		this.status = status;
-		
+
 	}
 
-
-
-
-	
 	public GridNode(int X, int Y, char status, boolean visited, GridNode parent, int g, int f, int h) {
-		this.X=X;
-		this.Y=Y;
-		this.status=status;
-		this.visited=visited;
-		this.parent=parent;
-		this.g=g;
-		this.f=f;
-		this.h=h;
+		this.X = X;
+		this.Y = Y;
+		this.status = status;
+		this.visited = visited;
+		this.parent = parent;
+		this.g = g;
+		this.f = f;
+		this.h = h;
 	}
-
 
 	public int getX() {
 		return X;
@@ -51,7 +45,6 @@ public class GridNode {
 	public void setY(int y) {
 		Y = y;
 	}
-
 
 	public char getStatus() {
 		return status;
@@ -76,7 +69,6 @@ public class GridNode {
 	public void setBlocked(boolean blocked) {
 		this.blocked = blocked;
 	}
-
 
 	public GridNode getParent() {
 		return parent;
@@ -110,4 +102,3 @@ public class GridNode {
 		this.h = h;
 	}
 }
-
