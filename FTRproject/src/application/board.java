@@ -9,8 +9,10 @@ import java.io.Writer;
 import java.util.Random;
 
 public class board {
+
 	static int x = 10;
 	static int testnum = 50;
+
 
 	public static void main(String[] args) throws IOException {
 		GridNode[][] gridBoard = initial();
