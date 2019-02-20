@@ -15,7 +15,6 @@ public class board {
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
 				GridNode n = new GridNode(i, j, ' ');
-				// random blocked 30% gridNode
 				if (Math.random() <= 0.3) {
 					n.setStatus('X');
 				}
