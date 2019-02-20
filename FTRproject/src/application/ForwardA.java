@@ -1,38 +1,57 @@
 package application;
 
+import java.awt.List;
+import java.util.PriorityQueue;
+
 public class ForwardA {
-	
-
-	public void Procedure(GridNode[][] gridBoard) {
-		int counter=0;
-		for (int i = 0; i < gridBoard.length; i++) {
-			for (int j = 0; j < gridBoard.length; j++) {
-				
-				gridBoard[i][j].setSearch(0);
-			}
-			}
-//			forallstatess∈S
-//			search(s) := 0;
-//		while sstart ̸= sgoal
-//			counter := counter + 1;
-//			g(sstart) := 0;
-//			search(sstart) := counter;
-//			g(sgoal) := ∞;
-//			search(sgoal) := counter;
-//			OPEN := CLOSED := ∅;
-//			insert sstart into OPEN with f-value g(sstart) + h(sstart); ComputePath();
-//			if OPEN = ∅
-//			print “I cannot reach the target.”; stop;
-//			follow the tree-pointers from sgoal to sstart and then move the agent along the resulting path from sstart to sgoal until it reaches sgoal or one or more action costs on the path increase;
-//			set sstart to the current state of the agent (if it moved);
-//			update the increased action costs (if any); print “I reached the target.”;
-//			stop;
-
-			
-		
+	static Integer myInf = Integer.MAX_VALUE;
+	public static void main(String[] args) {
+		board b = new board();
+		GridNode[][] g = b.initial();
+		Procedure(g);
 	}
 
-	public void ComputePath() {
+	public static void Procedure(GridNode[][] gridBoard) {
+		
+		int counter = 0;
+		GridNode start = new GridNode(0, 0, null);
+		GridNode goal = new GridNode(0, 0, null);
+		for (int i = 0; i < gridBoard.length; i++) {
+			for (int j = 0; j < gridBoard.length; j++) {
+				gridBoard[i][j].setSearch(0);
+				if (gridBoard[i][j].getStatus().equals("A")) {
+					start = gridBoard[i][j];
+				} else if (gridBoard[i][j].getStatus().equals("T")) {
+					goal = gridBoard[i][j];
+				}
+			}
+		}
+		GridNode ptr = start;
+		while (ptr != goal) {
+			counter++;
+			ptr.setG(0);
+			ptr.setSearch(counter);
+			goal.setG(myInf);
+			goal.setSearch(counter);
+			PriorityQueue<GridNode> openlist = new PriorityQueue<GridNode>();
+			PriorityQueue<GridNode> closedlist = new PriorityQueue<GridNode>();
+			ptr.setF(ptr.getG()+ptr.getH());
+			openlist.add(ptr);
+			ComputePath(ptr);
+			if(openlist.isEmpty()) {
+				System.out.println("I cannot reach the target.");
+			}
+			
+			
+
+		}
+
+	
+
+	}
+
+	public static void ComputePath(GridNode current) {
+//		while
 
 	}
 }
