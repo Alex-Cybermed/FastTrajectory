@@ -18,11 +18,11 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/Controller/GridWorld.fxml"));
+			loader.setLocation(getClass().getResource("/Controller/gridTEST.fxml"));
 			AnchorPane root = (AnchorPane) loader.load();
 			Scene scene = new Scene(root);
 			appController ftrController = loader.getController();
-			ftrController.obsL();
+			ftrController.initialize();
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Fast Trajectory Replanning");
 			primaryStage.setResizable(false);
