@@ -1,7 +1,9 @@
 package application;
 
+
+import java.io.File;
+
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
@@ -12,7 +14,7 @@ public class board {
 	static int x = 101;
 	static int numOfMap = 50;
 
-	public GridNode[][] initial() {
+	public static GridNode[][] initial() {
 		GridNode[][] gridBoard = new GridNode[x][x];
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
@@ -23,35 +25,42 @@ public class board {
 				gridBoard[i][j] = n;
 			}
 		}
-		GridNode A = randomAT(gridBoard);
-		A.setStatus("A");
-		GridNode T = randomAT(gridBoard);
-		T.setStatus("T");
+		randomAT(gridBoard,"A").setStatus("A");
+		randomAT(gridBoard,"T").setStatus("T");
 		return gridBoard;
 	}
 
-	public GridNode randomAT(GridNode[][] gridBoard) {
+	public static GridNode randomAT(GridNode[][] gridBoard, String AT) {
 		Random r = new Random();
-		int numX = r.nextInt(x);
-		int numY = r.nextInt(x);
-		return gridBoard[numX][numY];
+		int row = r.nextInt(x);
+		int col = r.nextInt(x);
+		if(!gridBoard[row][col].getStatus().equals("X")) {
+			if(gridBoard[row][col].getStatus().equals("A")) {
+				return randomAT(gridBoard,"A");
+			}else if(gridBoard[row][col].getStatus().equals("T")) {
+				return randomAT(gridBoard,"T");
+			}else {
+				return gridBoard[row][col];
+			}
+		}
+		return randomAT(gridBoard,AT);
 	}
 
-	public void printMap(GridNode[][] gridBoard) {
+	public static void printMap(GridNode[][] gridBoard) {
 		for (int k = 0; k < x; k++) {
 			System.out.print("--");
 		}
 		System.out.println();
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
-				if (gridBoard[i][j].getStatus() == "A") {
-					System.out.printf("%c ", 'A');
-				} else if (gridBoard[i][j].getStatus() == "T") {
-					System.out.printf("%c ", 'T');
-				} else if (gridBoard[i][j].getStatus() == "X") {
-					System.out.printf("%c ", 'X');
-				} else if (gridBoard[i][j].getStatus() == " ") {
-					System.out.printf("%c ", ' ');
+				if (gridBoard[i][j].getStatus().equals("A")) {
+					System.out.printf("A");
+				} else if (gridBoard[i][j].getStatus().equals("T")) {
+					System.out.printf("T");
+				} else if (gridBoard[i][j].getStatus().equals("X")) {
+					System.out.printf("X");
+				} else if (gridBoard[i][j].getStatus().equals("_")) {
+					System.out.printf("_");
 				}
 			}
 			System.out.println();
@@ -61,10 +70,10 @@ public class board {
 		}
 	}
 
-	public void FileOut(GridNode[][] gridBoard, int k) throws IOException {
+	public static void FileOut(GridNode[][] gridBoard, int k) throws IOException {
 		try {
 			String s = "src/TestCases/Test" + k + ".txt";
-			System.out.println("File Test" + k + ".txt successfully created!");
+//			System.out.println("File Test" + k + ".txt successfully created!");
 			PrintWriter fileWriter = new PrintWriter(s, "UTF-8");
 			for (int i = 0; i < x; i++) {
 				for (int j = 0; j < x; j++) {
@@ -75,10 +84,10 @@ public class board {
 //						String msg = gridBoard[i][j].getStatus() + " ";
 //						fileWriter.write(msg);
 //					} else {
-					//print node index
+					// print node index
 //					fileWriter.write(i + " " + j + " ");
 //					//print node status
-					fileWriter.write(gridBoard[i][j].getStatus()+" ");
+					fileWriter.write(gridBoard[i][j].getStatus() + " ");
 //					//print visited status
 //					if (!gridBoard[i][j].isVisited()) {
 //						fileWriter.write("Unvisit ");
@@ -94,35 +103,38 @@ public class board {
 		}
 	}
 
-	public GridNode[][] fileIn(String address) throws IOException {
+	public static GridNode[][] fileIn(String address) throws IOException {
 		GridNode[][] testCase = new GridNode[x][x];
 		try {
-			FileReader fr = new FileReader(address);
-			for(int i=0;i<x;i++) {
-				for(int j=0;j<x;j++) {
-					testCase[i][j] = new GridNode(i,j,fr.toString());
+			Scanner fr = new Scanner(new File(address));
+			for (int i = 0; i < x; i++) {
+				for (int j = 0; j < x; j++) {
+					String status = fr.next();
+//					System.out.println(status);
+					testCase[i][j] = new GridNode(i, j, status);
+//					System.out.print(testCase[i][j].getStatus());
 				}
 			}
 			fr.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+//		printMap(testCase);
 		return testCase;
 	}
 
 	public static void main(String[] args) throws IOException {
-		board bd = new board();
 		int i;
 		for (i = 1; i <= numOfMap; i++) {
-			GridNode[][] gridBoard = bd.initial();
-			bd.FileOut(gridBoard, i);
+			GridNode[][] gridBoard = initial();
+			FileOut(gridBoard, i);
 		}
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		System.out.println("Input the number of map you want to test:" + n);
-		String fileAddress = "src/TestCases/Test" + n + ".txt";
-		bd.printMap(bd.fileIn(fileAddress));
-		sc.close();
+//		Scanner sc = new Scanner(System.in);
+//		int n = sc.nextInt();
+//		System.out.println("Input the number of map you want to test:" + n);
+//		String fileAddress = "src/TestCases/Test" + n + ".txt";
+//		GridNode[][] out = fileIn(fileAddress);
+//		printMap(out);
+//		sc.close();
 	}
-
 }
