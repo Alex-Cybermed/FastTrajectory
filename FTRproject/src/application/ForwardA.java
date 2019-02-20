@@ -3,11 +3,14 @@ package application;
 public class ForwardA {
 	
 
-	public void Procedure(GridNode[] gridBoard) {
+	public void Procedure(GridNode[][] gridBoard) {
 		int counter=0;
-		for(GridNode g: gridBoard) {
-			
-		}
+		for (int i = 0; i < gridBoard.length; i++) {
+			for (int j = 0; j < gridBoard.length; j++) {
+				
+				gridBoard[i][j].setSearch(0);
+			}
+			}
 //			forallstatess∈S
 //			search(s) := 0;
 //		while sstart ̸= sgoal
