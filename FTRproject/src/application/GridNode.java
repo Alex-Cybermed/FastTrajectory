@@ -4,7 +4,7 @@ public class GridNode {
 
 	private int X;
 	private int Y;
-	private char status;
+	private String status;
 	private boolean visited;
 	private boolean blocked;
 	private GridNode parent;
@@ -12,13 +12,13 @@ public class GridNode {
 	private int f;
 	private int h;
 
-	public GridNode(int X, int Y, char status) {
+	public GridNode(int X, int Y, String string) {
 		this.X = X;
 		this.Y = Y;
-		this.status = status;
+		this.status = string;
 	}
 
-	public GridNode(int X, int Y, char status, boolean visited, GridNode parent, int g, int f, int h) {
+	public GridNode(int X, int Y, String status, boolean visited, GridNode parent, int g, int f, int h) {
 		this.X = X;
 		this.Y = Y;
 		this.status = status;
@@ -45,11 +45,11 @@ public class GridNode {
 		Y = y;
 	}
 
-	public char getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(char status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
