@@ -121,7 +121,7 @@ public class board {
 		int n = sc.nextInt();
 		System.out.println("Input the number of map you want to test:" + n);
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
-		bd.fileIn(fileAddress);
+		bd.printMap(bd.fileIn(fileAddress));
 		sc.close();
 	}
 
