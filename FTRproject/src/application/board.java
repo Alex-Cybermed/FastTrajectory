@@ -127,12 +127,12 @@ public class board {
 			GridNode[][] gridBoard = initial();
 			FileOut(gridBoard, i);
 		}
-//		Scanner sc = new Scanner(System.in);
-//		int n = sc.nextInt();
-//		System.out.println("Input the number of map you want to test:" + n);
-//		String fileAddress = "src/TestCases/Test" + n + ".txt";
-//		GridNode[][] out = fileIn(fileAddress);
-//		printMap(out);
-//		sc.close();
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		System.out.println("Input the number of map you want to test:" + n);
+		String fileAddress = "src/TestCases/Test" + n + ".txt";
+		GridNode[][] out = fileIn(fileAddress);
+		printMap(out);
+		sc.close();
 	}
 }
