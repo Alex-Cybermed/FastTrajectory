@@ -23,18 +23,25 @@ public class board {
 				gridBoard[i][j] = n;
 			}
 		}
-		GridNode A = randomAT(gridBoard);
-		A.setStatus("A");
-		GridNode T = randomAT(gridBoard);
-		T.setStatus("T");
+		randomAT(gridBoard,"A").setStatus("A");
+		randomAT(gridBoard,"T").setStatus("T");
 		return gridBoard;
 	}
 
-	public static GridNode randomAT(GridNode[][] gridBoard) {
+	public static GridNode randomAT(GridNode[][] gridBoard, String AT) {
 		Random r = new Random();
-		int numX = r.nextInt(x);
-		int numY = r.nextInt(x);
-		return gridBoard[numX][numY];
+		int row = r.nextInt(x);
+		int col = r.nextInt(x);
+		if(!gridBoard[row][col].getStatus().equals("X")) {
+			if(gridBoard[row][col].getStatus().equals("A")) {
+				return randomAT(gridBoard,"A");
+			}else if(gridBoard[row][col].getStatus().equals("T")) {
+				return randomAT(gridBoard,"T");
+			}else {
+				return gridBoard[row][col];
+			}
+		}
+		return randomAT(gridBoard,AT);
 	}
 
 	public static void printMap(GridNode[][] gridBoard) {
@@ -120,12 +127,12 @@ public class board {
 			GridNode[][] gridBoard = initial();
 			FileOut(gridBoard, i);
 		}
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		System.out.println("Input the number of map you want to test:" + n);
-		String fileAddress = "src/TestCases/Test" + n + ".txt";
-		GridNode[][] out = fileIn(fileAddress);
-		printMap(out);
-		sc.close();
+//		Scanner sc = new Scanner(System.in);
+//		int n = sc.nextInt();
+//		System.out.println("Input the number of map you want to test:" + n);
+//		String fileAddress = "src/TestCases/Test" + n + ".txt";
+//		GridNode[][] out = fileIn(fileAddress);
+//		printMap(out);
+//		sc.close();
 	}
 }
