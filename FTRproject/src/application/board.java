@@ -26,7 +26,7 @@ public class board {
 				} else if (gridBoard[i][j].isBlocked()) {
 					System.out.printf("%c ", 'X');
 				} else if (!gridBoard[i][j].isBlocked()) {
-					System.out.printf("%c ", 'O');
+					System.out.printf("%c ", ' ');
 				}
 			}
 			System.out.println();
