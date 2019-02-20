@@ -1,11 +1,18 @@
 package application;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Random;
 
 public class board {
 	static int x = 10;
+	static int testnum = 50;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		GridNode[][] gridBoard = initial();
 		GridNode A = randomAT(gridBoard);
 		GridNode T = randomAT(gridBoard);
@@ -13,7 +20,44 @@ public class board {
 		printMap(gridBoard, A, T);
 		// System.out.println(A.getX()+", "+ A.getY());
 		// System.out.println(T.getX()+", "+ T.getY());
+		FileOut(gridBoard, A, T);
 
+	}
+
+	public static void FileOut(GridNode[][] gridBoard, GridNode A, GridNode T) throws IOException {
+		Writer writer = null;
+		try {
+			for (int k = 0; k < x; k++) {
+				String s = "src/TestCases/Test" + k + ".txt";
+				System.out.println(s);
+				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(s), "utf-8"));
+				// write line by line
+				System.out.println("IOEon");
+				for (int i = 0; i < x; i++) {
+					System.out.println("IOEion");
+					for (int j = 0; j < x; j++) {
+						if (gridBoard[i][j] == A) {
+							String msg = i + " " + j + " " + " " + gridBoard[i][j].isBlocked() + "A";
+							writer.write(msg);
+						} else if (gridBoard[i][j] == T) {
+							String msg = i + " " + j + " " + " " + gridBoard[i][j].isBlocked() + "T";
+							writer.write(msg);
+						} else {
+							// normal node
+							String msg = i + " " + j + " " + " " + gridBoard[i][j].isBlocked() + "N";
+							writer.write(msg);
+						}
+					}
+				}
+			}
+		} catch (IOException ex) {
+			System.out.println("IOException");
+		} finally {
+			try {
+				writer.close();
+			} catch (Exception ex) {
+			}
+		}
 	}
 
 	public static void printMap(GridNode[][] gridBoard, GridNode A, GridNode T) {
@@ -24,6 +68,7 @@ public class board {
 		System.out.println();
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
+
 				if (gridBoard[i][j] == A) {
 					System.out.printf("%c ", 'A');
 				} else if (gridBoard[i][j] == T) {
@@ -36,7 +81,7 @@ public class board {
 			}
 			System.out.println();
 		}
-		
+
 		for (int k = 0; k < x; k++) {
 			System.out.print("--");
 
