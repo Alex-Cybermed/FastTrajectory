@@ -17,6 +17,11 @@ public class board {
 	}
 
 	public static void printMap(GridNode[][] gridBoard, GridNode A, GridNode T) {
+		for (int k = 0; k < x; k++) {
+			System.out.print("--");
+
+		}
+		System.out.println();
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
 				if (gridBoard[i][j] == A) {
@@ -32,6 +37,10 @@ public class board {
 			System.out.println();
 		}
 		System.out.println();
+		for (int k = 0; k < x; k++) {
+			System.out.print("--");
+
+		}
 	}
 
 	public static GridNode randomAT(GridNode[][] gridBoard) {
