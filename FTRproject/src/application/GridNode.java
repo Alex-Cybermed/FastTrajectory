@@ -6,7 +6,6 @@ public class GridNode {
 	private int Y;
 	private String status;
 	private boolean visited;
-	private boolean blocked;
 	private GridNode parent;
 	private int g;
 	private int f;
@@ -61,13 +60,6 @@ public class GridNode {
 		this.visited = visited;
 	}
 
-	public boolean isBlocked() {
-		return blocked;
-	}
-
-	public void setBlocked(boolean blocked) {
-		this.blocked = blocked;
-	}
 
 	public GridNode getParent() {
 		return parent;
