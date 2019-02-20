@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.appController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.appController">
    <children>
       <GridPane gridLinesVisible="true" layoutX="34.0" layoutY="36.0" prefHeight="505.0" prefWidth="505.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
         <columnConstraints>
@@ -223,12 +223,10 @@
       </GridPane>
       <HBox layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="757.0">
          <children>
-            <Button mnemonicParsing="false" text="New Map" />
-            <Button mnemonicParsing="false" text="Generate Map" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="Generate New Map" />
+            <Button mnemonicParsing="false" text="Reset" />
+            <Button mnemonicParsing="false" text="Forward A*" />
+            <Button mnemonicParsing="false" text="Backward A*" />
             <Button mnemonicParsing="false" text="Button" />
             <Button mnemonicParsing="false" text="Button" />
             <Button mnemonicParsing="false" text="Button" />
