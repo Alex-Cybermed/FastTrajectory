@@ -3,7 +3,7 @@ package application;
 import java.util.Random;
 
 public class board {
-	static int x = 10;
+	static int x = 101;
 
 	public static void main(String[] args) {
 		GridNode[][] gridBoard = initial();
