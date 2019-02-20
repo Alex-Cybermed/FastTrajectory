@@ -16,7 +16,6 @@ public class GridNode {
 		this.X = X;
 		this.Y = Y;
 		this.status = status;
-
 	}
 
 	public GridNode(int X, int Y, char status, boolean visited, GridNode parent, int g, int f, int h) {
