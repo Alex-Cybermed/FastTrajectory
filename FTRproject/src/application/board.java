@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
@@ -7,7 +8,7 @@ import java.util.Random;
 public class board {
 
 	static int x = 10;
-	static int testnum = 10;
+	static int numOfMap = 10;
 
 	public GridNode[][] initial() {
 		GridNode[][] gridBoard = new GridNode[x][x];
@@ -62,7 +63,7 @@ public class board {
 	public void FileOut(GridNode[][] gridBoard, int k) throws IOException {
 		try {
 			String s = "src/TestCases/Test" + k + ".txt";
-			System.out.println(s);
+			System.out.println("File Test"+k+".txt successfully created!");
 			PrintWriter fileWriter = new PrintWriter(s, "UTF-8");
 			for (int i = 0; i < x; i++) {
 				for (int j = 0; j < x; j++) {
@@ -74,8 +75,8 @@ public class board {
 //						fileWriter.write(msg);
 //					} else {
 //						// normal node
-						String msg = gridBoard[i][j].getStatus() + " ";
-						fileWriter.write(msg);
+					String msg = gridBoard[i][j].getStatus() + " ";
+					fileWriter.write(msg);
 //					}
 				}
 				fileWriter.write("\n");
@@ -86,12 +87,15 @@ public class board {
 		}
 	}
 
+	public void fileIn(File gridWorld) {
+		
+	}
+
 	public static void main(String[] args) throws IOException {
 		board bd = new board();
 		int i;
-		for (i = 0; i < testnum; i++) {
+		for (i = 1; i <= numOfMap; i++) {
 			GridNode[][] gridBoard = bd.initial();
-//			bd.printMap(gridBoard);
 			bd.FileOut(gridBoard, i);
 		}
 	}

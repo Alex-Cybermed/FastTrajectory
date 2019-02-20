@@ -1,10 +1,10 @@
-          X         
-        T       X X 
-  X         X X     
-      X   X X X     
-  X     X X A X X   
-X X     X X   X     
-X   X         X   X 
-        X           
-              X     
-  X     X           
+X   X     X X X     
+      X         X   
+      X             
+    X X X           
+X       X X         
+X X     X     X     
+        A       X X 
+X   X     X         
+          X X   T   
+X         X         
