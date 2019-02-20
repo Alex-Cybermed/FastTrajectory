@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.util.Random;
 
 public class board {
-	
+
 	static int x = 10;
 	static int testnum = 10;
 
@@ -61,25 +61,26 @@ public class board {
 
 	public void FileOut(GridNode[][] gridBoard, int k) throws IOException {
 		try {
-				String s = "src/TestCases/Test" + k + ".txt";
-				System.out.println(s);
-				PrintWriter fileWriter = new PrintWriter(s, "UTF-8");
-				for (int i = 0; i < x; i++) {
-					for (int j = 0; j < x; j++) {
-						if (gridBoard[i][j].getStatus() == 'A') {
-							String msg = i + " " + j + " " + " " + gridBoard[i][j].getStatus() + "\n";
-							fileWriter.write(msg);
-						} else if (gridBoard[i][j].getStatus() == 'T') {
-							String msg = i + " " + j + " " + " " + gridBoard[i][j].getStatus() + "\n";
-							fileWriter.write(msg);
-						} else {
-							// normal node
-							String msg = i + " " + j + " " + " " + gridBoard[i][j].getStatus() + "\n";
-							fileWriter.write(msg);
-						}
-					}
+			String s = "src/TestCases/Test" + k + ".txt";
+			System.out.println(s);
+			PrintWriter fileWriter = new PrintWriter(s, "UTF-8");
+			for (int i = 0; i < x; i++) {
+				for (int j = 0; j < x; j++) {
+//					if ([i][j].getStatus() == 'A') {
+//						String msg = gridBoard[i][j].getStatus() + " ";
+//						fileWriter.write(msg);
+//					} else if (gridBoard[i][j].getStatus() == 'T') {
+//						String msg = gridBoard[i][j].getStatus() + " ";
+//						fileWriter.write(msg);
+//					} else {
+//						// normal node
+						String msg = gridBoard[i][j].getStatus() + " ";
+						fileWriter.write(msg);
+//					}
 				}
-				fileWriter.close();
+				fileWriter.write("\n");
+			}
+			fileWriter.close();
 		} catch (IOException ex) {
 			System.out.println("IOException");
 		}
@@ -87,14 +88,10 @@ public class board {
 
 	public static void main(String[] args) throws IOException {
 		board bd = new board();
-//		GridNode[][] gridBoard = initial();
-//		printMap(gridBoard);
-		// System.out.println(A.getX()+", "+ A.getY());
-		// System.out.println(T.getX()+", "+ T.getY());
 		int i;
 		for (i = 0; i < testnum; i++) {
 			GridNode[][] gridBoard = bd.initial();
-			bd.printMap(gridBoard);
+//			bd.printMap(gridBoard);
 			bd.FileOut(gridBoard, i);
 		}
 	}
