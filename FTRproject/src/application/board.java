@@ -17,16 +17,18 @@ public class board {
 	public static void main(String[] args) throws IOException {
 		GridNode[][] gridBoard = initial();
 		GridNode A = randomAT(gridBoard);
+		A.setStatus('A');
 		GridNode T = randomAT(gridBoard);
+		T.setStatus('T');
 		// printGridPane(gridBoard);
-		printMap(gridBoard, A, T);
+		printMap(gridBoard);
 		// System.out.println(A.getX()+", "+ A.getY());
 		// System.out.println(T.getX()+", "+ T.getY());
-		FileOut(gridBoard, A, T);
+		FileOut(gridBoard);
 
 	}
 
-	public static void FileOut(GridNode[][] gridBoard, GridNode A, GridNode T) throws IOException {
+	public static void FileOut(GridNode[][] gridBoard) throws IOException {
 		Writer writer = null;
 		try {
 			for (int k = 0; k < x; k++) {
@@ -34,14 +36,12 @@ public class board {
 				System.out.println(s);
 				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(s), "utf-8"));
 				// write line by line
-				System.out.println("IOEon");
 				for (int i = 0; i < x; i++) {
-					System.out.println("IOEion");
 					for (int j = 0; j < x; j++) {
-						if (gridBoard[i][j] == A) {
-							String msg = i + " " + j + " " + " " + gridBoard[i][j].isBlocked() + "A";
+						if (gridBoard[i][j].getStatus()=='A') {
+							String msg = i + " " + j + " " + " " + gridBoard[i][j].isBlocked() + "A"+" ";
 							writer.write(msg);
-						} else if (gridBoard[i][j] == T) {
+						} else if (gridBoard[i][j].getStatus() == 'T') {
 							String msg = i + " " + j + " " + " " + gridBoard[i][j].isBlocked() + "T";
 							writer.write(msg);
 						} else {
@@ -62,7 +62,7 @@ public class board {
 		}
 	}
 
-	public static void printMap(GridNode[][] gridBoard, GridNode A, GridNode T) {
+	public static void printMap(GridNode[][] gridBoard) {
 		for (int k = 0; k < x; k++) {
 			System.out.print("--");
 
@@ -71,13 +71,13 @@ public class board {
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
 
-				if (gridBoard[i][j] == A) {
+				if (gridBoard[i][j].getStatus() == 'A') {
 					System.out.printf("%c ", 'A');
-				} else if (gridBoard[i][j] == T) {
+				} else if (gridBoard[i][j].getStatus() == 'T') {
 					System.out.printf("%c ", 'T');
-				} else if (gridBoard[i][j].isBlocked()) {
+				} else if (gridBoard[i][j].getStatus()=='X') {
 					System.out.printf("%c ", 'X');
-				} else if (!gridBoard[i][j].isBlocked()) {
+				} else if (gridBoard[i][j].getStatus()==' ') {
 					System.out.printf("%c ", ' ');
 				}
 			}
@@ -103,10 +103,10 @@ public class board {
 		GridNode[][] gridBoard = new GridNode[x][x];
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
-				GridNode n = new GridNode(i, j, false, false);
+				GridNode n = new GridNode(i, j,' ');
 				// random blocked 30% gridNode
 				if (Math.random() <= 0.3) {
-					n.setBlocked(true);
+					n.setStatus('X');;
 				}
 				gridBoard[i][j] = n;
 

@@ -13,12 +13,11 @@ public class GridNode {
 	private int h;
 
 
-	public GridNode(int X, int Y, boolean visited, boolean blocked) {
+	public GridNode(int X, int Y, char status) {
 		this.X = X;
 		this.Y = Y;
-		this.visited = false;
-		this.blocked = false;
-		this.parent = null;
+		this.status = status;
+		
 	}
 
 
