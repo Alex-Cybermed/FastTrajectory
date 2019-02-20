@@ -10,6 +10,7 @@ public class GridNode {
 	private int g;
 	private int f;
 	private int h;
+	private int search;
 
 	public GridNode(int X, int Y, String string) {
 		this.X = X;
@@ -17,7 +18,7 @@ public class GridNode {
 		this.status = string;
 	}
 
-	public GridNode(int X, int Y, String status, boolean visited, GridNode parent, int g, int f, int h) {
+	public GridNode(int X, int Y, String status, boolean visited, GridNode parent, int g, int f, int h, int search) {
 		this.X = X;
 		this.Y = Y;
 		this.status = status;
@@ -26,6 +27,7 @@ public class GridNode {
 		this.g = g;
 		this.f = f;
 		this.h = h;
+		this.search = search;
 	}
 
 	public int getX() {
@@ -60,7 +62,6 @@ public class GridNode {
 		this.visited = visited;
 	}
 
-
 	public GridNode getParent() {
 		return parent;
 	}
@@ -91,5 +92,13 @@ public class GridNode {
 
 	public void setH(int h) {
 		this.h = h;
+	}
+
+	public int getSearch() {
+		return search;
+	}
+
+	public void setSearch(int search) {
+		this.search = search;
 	}
 }
