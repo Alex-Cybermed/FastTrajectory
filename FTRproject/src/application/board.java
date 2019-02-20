@@ -64,9 +64,9 @@ public class board {
 		}
 	}
 
-	public void FileOut(GridNode[][] gridBoard) throws IOException {
+	public void FileOut(GridNode[][] gridBoard, int k) throws IOException {
 		try {
-			for (int k = 0; k < testnum; k++) {
+//			for (int k = 0; k < testnum; k++) {
 				String s = "src/TestCases/Test" + k + ".txt";
 				System.out.println(s);
 				PrintWriter fileWriter = new PrintWriter(s, "UTF-8");
@@ -89,7 +89,7 @@ public class board {
 					}
 				}
 				fileWriter.close();
-			}
+//			}
 		} catch (IOException ex) {
 			System.out.println("IOException");
 //		} finally {
@@ -105,12 +105,12 @@ public class board {
 //		printMap(gridBoard);
 		// System.out.println(A.getX()+", "+ A.getY());
 		// System.out.println(T.getX()+", "+ T.getY());
-		int testnum = 10;
+		//int testnum = 10;
 		int i;
 		for (i = 0; i < testnum; i++) {
 			GridNode[][] gridBoard = bd.initial();
 			bd.printMap(gridBoard);
-			bd.FileOut(gridBoard);
+			bd.FileOut(gridBoard, i);
 		}
 //		for (int j = 0; j < testnum; j++) {
 //			String fileName = "src/TestCases/Test" + j + ".txt";
