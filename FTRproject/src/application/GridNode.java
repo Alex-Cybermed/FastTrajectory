@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 public class GridNode {
 
 	private int X;
@@ -11,6 +13,7 @@ public class GridNode {
 	private int f;
 	private int h;
 	private int search;
+	private ArrayList<GridNode> adj;
 
 	public GridNode(int X, int Y, String string) {
 		this.X = X;
@@ -28,6 +31,10 @@ public class GridNode {
 		this.f = f;
 		this.h = h;
 		this.search = search;
+	}
+	
+	public ArrayList<GridNode> getAdj() {
+		return adj;
 	}
 
 	public int getX() {

@@ -2,7 +2,6 @@ package application;
 
 
 import java.io.File;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +10,7 @@ import java.util.Scanner;
 
 public class board {
 
-	static int x = 101;
+	static int x = 8;
 	static int numOfMap = 50;
 
 	public static GridNode[][] initial() {
@@ -135,6 +134,7 @@ public class board {
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
 		GridNode[][] out = fileIn(fileAddress);
 		printMap(out);
+		System.out.println(out.length);
 		sc.close();
 	}
 }

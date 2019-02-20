@@ -1,13 +1,12 @@
 package application;
 
-import java.awt.List;
 import java.util.PriorityQueue;
 
 public class ForwardA {
 	static Integer myInf = Integer.MAX_VALUE;
 	public static void main(String[] args) {
-		board b = new board();
-		GridNode[][] g = b.initial();
+//		board b = new board();
+		GridNode[][] g = board.initial();
 		Procedure(g);
 	}
 
