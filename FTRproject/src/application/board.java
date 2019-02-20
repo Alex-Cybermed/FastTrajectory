@@ -16,7 +16,7 @@ public class board {
 		GridNode[][] gridBoard = new GridNode[x][x];
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
-				GridNode n = new GridNode(i, j, " ");
+				GridNode n = new GridNode(i, j, "_");
 				if (Math.random() <= 0.3) {
 					n.setStatus("X");
 				}
@@ -94,20 +94,20 @@ public class board {
 		}
 	}
 
-	public void fileIn(String address) {
+	public GridNode[][] fileIn(String address) throws IOException {
 		GridNode[][] testCase = new GridNode[x][x];
 		try {
 			FileReader fr = new FileReader(address);
+			for(int i=0;i<x;i++) {
+				for(int j=0;j<x;j++) {
+					testCase[i][j] = new GridNode(i,j,fr.toString());
+				}
+			}
+			fr.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(int i=0;i<x;i++) {
-			for(int j=0;j<x;j++) {
-				GridNode n = new GridNode(i, j, " ");
-				testCase[i][j] = n;
-			}
-		}
+		return testCase;
 	}
 
 	public static void main(String[] args) throws IOException {
