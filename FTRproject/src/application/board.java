@@ -1,12 +1,7 @@
 package application;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Random;
 
 public class board {
@@ -66,13 +61,9 @@ public class board {
 
 	public void FileOut(GridNode[][] gridBoard, int k) throws IOException {
 		try {
-//			for (int k = 0; k < testnum; k++) {
 				String s = "src/TestCases/Test" + k + ".txt";
 				System.out.println(s);
 				PrintWriter fileWriter = new PrintWriter(s, "UTF-8");
-//				// writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(s),
-//				// "utf-8"));
-//				// write line by line
 				for (int i = 0; i < x; i++) {
 					for (int j = 0; j < x; j++) {
 						if (gridBoard[i][j].getStatus() == 'A') {
@@ -89,13 +80,8 @@ public class board {
 					}
 				}
 				fileWriter.close();
-//			}
 		} catch (IOException ex) {
 			System.out.println("IOException");
-//		} finally {
-//			try {
-//				writer.close();
-//			} catch (Exception ex) {
 		}
 	}
 
@@ -105,18 +91,12 @@ public class board {
 //		printMap(gridBoard);
 		// System.out.println(A.getX()+", "+ A.getY());
 		// System.out.println(T.getX()+", "+ T.getY());
-		//int testnum = 10;
 		int i;
 		for (i = 0; i < testnum; i++) {
 			GridNode[][] gridBoard = bd.initial();
 			bd.printMap(gridBoard);
 			bd.FileOut(gridBoard, i);
 		}
-//		for (int j = 0; j < testnum; j++) {
-//			String fileName = "src/TestCases/Test" + j + ".txt";
-//			PrintWriter fileWriter = new PrintWriter(fileName, "UTF-8");
-//		}
-//		FileOut(gridBoard);
 	}
 
 }
