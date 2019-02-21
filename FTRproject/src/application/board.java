@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class board {
 
-	static int x = 8;
-	static int numOfMap = 50;
+	static int x = 5;
+	static int numOfMap = 10;
 
 	public static GridNode[][] initial() {
 		GridNode[][] gridBoard = new GridNode[x][x];

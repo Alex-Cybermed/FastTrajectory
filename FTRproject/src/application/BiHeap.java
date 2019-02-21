@@ -2,8 +2,10 @@ package application;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 
-public class BiHeap {
+@SuppressWarnings("serial")
+public class BiHeap<E> extends ArrayList<E> implements Queue<E> {
 	/** The number of children each node has **/
 	private static final int d = 2;
 	private int heapSize;
@@ -40,6 +42,14 @@ public class BiHeap {
 		/** Percolate up **/
 		heap.add(x);
 		heapifyUp(heapSize - 1);
+	}
+	
+	public boolean contains(GridNode n) {
+		return heap.contains(n);
+	}
+	
+	public boolean remove(GridNode n) {
+		return heap.remove(n);
 	}
 
 	/** Function to find least element **/
@@ -111,5 +121,35 @@ public class BiHeap {
 		for (int i = 0; i < heapSize; i++)
 			System.out.print(heap.get(i) + " ");
 		System.out.println();
+	}
+
+	@Override
+	public boolean offer(E e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public E remove() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public E poll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public E element() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public E peek() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

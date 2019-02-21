@@ -1,21 +1,18 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 public class ForwardAStar {
-	private PriorityQueue<GridNode> oL = new PriorityQueue<GridNode>();
-	private PriorityQueue<GridNode> cL = new PriorityQueue<GridNode>();
+	private BiHeap<GridNode> openList = new BiHeap<GridNode>();
+	private DoubleLL<GridNode> closeList = new DoubleLL<GridNode>();
 	private int counter = 0;
-//	private int h = 0;
-//	private int g = 0;
-//	private int f = 0;
 	private int cost = 1;
 	static Integer Inf = Integer.MAX_VALUE;
 
 	public void forwardA(GridNode[][] gridMap) {
 		GridNode A = new GridNode(0, 0, null);
 		GridNode T = new GridNode(0, 0, null);
+		// traverse whole map initial search as 0 and find out A and T
 		for (int i = 0; i < gridMap.length; i++) {
 			for (int j = 0; j < gridMap.length; j++) {
 				gridMap[i][j].setSearch(0);
@@ -27,45 +24,49 @@ public class ForwardAStar {
 				}
 			}
 		}
+		// set whole map with consistent h-value
 		setHvalue(gridMap, T);
+		// tree pointer point to current GridNode
 		GridNode ptr = new GridNode(0, 0, null);
 		ptr = A;
 		while (ptr != T) {
-			counter = counter++;
+			counter = counter + 1;
 			ptr.setG(0);
 			ptr.setSearch(counter);
 			T.setG(Inf);
 			T.setSearch(counter);
-			oL.clear();
-			cL.clear();
+			openList.makeEmpty();
+			closeList.reset();
 			ptr.setF(ptr.getG() + ptr.getH());
-			oL.add(ptr);
+			openList.insert(ptr);
 			ComputerPath(gridMap, A, T);
-			if(oL.isEmpty()) {
+			if (openList.isEmpty()) {
 				System.out.println("Fail");
 				break;
 			}
+			while(closeList.)
+
 		}
 
 	}
 
 	public void ComputerPath(GridNode[][] gridMap, GridNode A, GridNode T) {
-		while (T.getG() > oL.peek().getF()) {
-			GridNode s = oL.peek();
-			cL.add(oL.remove());
-			for(GridNode n:ADJ(gridMap,s)){
-				if(n.getSearch()<counter) {
+		while (T.getG() > openList.findMin().getF()) {
+			GridNode s = openList.findMin();
+			closeList.addLast(openList.deleteMin());
+			for (GridNode n : ADJ(gridMap, s)) {
+				if (n.getSearch() < counter) {
 					n.setG(Inf);
 					n.setSearch(counter);
 				}
-				if(n.getG()>(s.getG()+cost)){
-					n.setG(s.getG()+cost);
+				if (n.getG() > (s.getG() + cost)) {
+					n.setG(s.getG() + cost);
 					n.setParent(s);
-					if(oL.contains(n)) {
-						oL.remove(n);
-					}else {
-						n.setF(n.getG()+n.getH());
-						oL.add(n);
+					if (openList.contains(n)) {
+						openList.remove(n);
+					} else {
+						n.setF(n.getG() + n.getH());
+						openList.insert(n);
 					}
 				}
 			}
@@ -90,19 +91,16 @@ public class ForwardAStar {
 		GridNode right = gridMap[curr.getX()][curr.getY() + 1];
 		ArrayList<GridNode> adjacent = new ArrayList<GridNode>();
 
-		if (up.getX() > gridMap.length || up.getY() > gridMap.length || up.getX() < 0 || up.getY() < 0
-				|| up.getStatus().equals("X")) {
-			//do not append
-		}else if (down.getX() > gridMap.length || down.getY() > gridMap.length || down.getX() < 0 || down.getY() < 0
-				|| down.getStatus().equals("X")) {
-			//do not append
-		}else if (left.getX() > gridMap.length || left.getY() > gridMap.length || left.getX() < 0 || left.getY() < 0
-				|| left.getStatus().equals("X")) {
-			//do not append
-		}else if (right.getX() > gridMap.length || right.getY() > gridMap.length || right.getX() < 0 || right.getY() < 0
-				|| right.getStatus().equals("X")) {
-			//do not append
-		}else {
+		if (up.getX() > gridMap.length || up.getY() > gridMap.length || up.getX() < 0 || up.getY() < 0) {
+			// do not append
+		} else if (down.getX() > gridMap.length || down.getY() > gridMap.length || down.getX() < 0 || down.getY() < 0) {
+			// do not append
+		} else if (left.getX() > gridMap.length || left.getY() > gridMap.length || left.getX() < 0 || left.getY() < 0) {
+			// do not append
+		} else if (right.getX() > gridMap.length || right.getY() > gridMap.length || right.getX() < 0
+				|| right.getY() < 0) {
+			// do not append
+		} else {
 			adjacent.add(curr);
 		}
 		return adjacent;
