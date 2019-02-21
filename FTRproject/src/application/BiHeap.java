@@ -7,12 +7,12 @@ public class BiHeap {
 	/** The number of children each node has **/
 	private static final int d = 2;
 	private int heapSize;
-	private int[] heap;
+	private GridNode[] heap;
 
 	/** Constructor **/
 	public BiHeap(int capacity) {
 		heapSize = 0;
-		heap = new int[capacity + 1];
+		heap = new GridNode[capacity + 1];
 		Arrays.fill(heap, -1);
 	}
 
@@ -42,7 +42,7 @@ public class BiHeap {
 	}
 
 	/** Function to insert element */
-	public void insert(int x) {
+	public void insert(GridNode x) {
 		if (isFull())
 			throw new NoSuchElementException("Overflow Exception");
 		/** Percolate up **/
@@ -51,24 +51,24 @@ public class BiHeap {
 	}
 
 	/** Function to find least element **/
-	public int findMin() {
+	public GridNode findMin() {
 		if (isEmpty())
 			throw new NoSuchElementException("Underflow Exception");
 		return heap[0];
 	}
 
-	/** Function to delete min element **/
-	public int deleteMin() {
-		int keyItem = heap[0];
+	/** Function to delete min element and return **/
+	public GridNode deleteMin() {
+		GridNode keyItem = heap[0];
 		delete(0);
 		return keyItem;
 	}
 
 	/** Function to delete element at an index **/
-	public int delete(int ind) {
+	public GridNode delete(int ind) {
 		if (isEmpty())
 			throw new NoSuchElementException("Underflow Exception");
-		int keyItem = heap[ind];
+		GridNode keyItem = heap[ind];
 		heap[ind] = heap[heapSize - 1];
 		heapSize--;
 		heapifyDown(ind);
@@ -77,8 +77,8 @@ public class BiHeap {
 
 	/** Function heapifyUp **/
 	private void heapifyUp(int childInd) {
-		int tmp = heap[childInd];
-		while (childInd > 0 && tmp < heap[parent(childInd)]) {
+		GridNode tmp = heap[childInd];
+		while (childInd > 0 && tmp.getF() < heap[parent(childInd)].getF()) {
 			heap[childInd] = heap[parent(childInd)];
 			childInd = parent(childInd);
 		}
@@ -88,10 +88,10 @@ public class BiHeap {
 	/** Function heapifyDown **/
 	private void heapifyDown(int ind) {
 		int child;
-		int tmp = heap[ind];
+		GridNode tmp = heap[ind];
 		while (kthChild(ind, 1) < heapSize) {
 			child = minChild(ind);
-			if (heap[child] < tmp)
+			if (heap[child].getF() < tmp.getF())
 				heap[ind] = heap[child];
 			else
 				break;
@@ -106,7 +106,7 @@ public class BiHeap {
 		int k = 2;
 		int pos = kthChild(ind, k);
 		while ((k <= d) && (pos < heapSize)) {
-			if (heap[pos] < heap[bestChild])
+			if (heap[pos].getF() < heap[bestChild].getF())
 				bestChild = pos;
 			pos = kthChild(ind, k++);
 		}
