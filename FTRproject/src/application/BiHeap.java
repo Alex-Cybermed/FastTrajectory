@@ -1,29 +1,23 @@
 package application;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class BiHeap {
 	/** The number of children each node has **/
 	private static final int d = 2;
 	private int heapSize;
-	private GridNode[] heap;
+	private ArrayList<GridNode> heap;
 
 	/** Constructor **/
-	public BiHeap(int capacity) {
+	public BiHeap() {
 		heapSize = 0;
-		heap = new GridNode[capacity + 1];
-		Arrays.fill(heap, -1);
+		heap = new ArrayList<GridNode>();
 	}
 
 	/** Function to check if heap is empty **/
 	public boolean isEmpty() {
 		return heapSize == 0;
-	}
-
-	/** Check if heap is full **/
-	public boolean isFull() {
-		return heapSize == heap.length;
 	}
 
 	/** Clear heap */
@@ -43,10 +37,8 @@ public class BiHeap {
 
 	/** Function to insert element */
 	public void insert(GridNode x) {
-		if (isFull())
-			throw new NoSuchElementException("Overflow Exception");
 		/** Percolate up **/
-		heap[heapSize++] = x;
+		heap.add(x);
 		heapifyUp(heapSize - 1);
 	}
 
@@ -54,12 +46,12 @@ public class BiHeap {
 	public GridNode findMin() {
 		if (isEmpty())
 			throw new NoSuchElementException("Underflow Exception");
-		return heap[0];
+		return heap.get(0);
 	}
 
 	/** Function to delete min element and return **/
 	public GridNode deleteMin() {
-		GridNode keyItem = heap[0];
+		GridNode keyItem = heap.get(0);
 		delete(0);
 		return keyItem;
 	}
@@ -68,8 +60,8 @@ public class BiHeap {
 	public GridNode delete(int ind) {
 		if (isEmpty())
 			throw new NoSuchElementException("Underflow Exception");
-		GridNode keyItem = heap[ind];
-		heap[ind] = heap[heapSize - 1];
+		GridNode keyItem = heap.get(ind);
+		heap.set(ind, heap.get(heap.size() - 1));
 		heapSize--;
 		heapifyDown(ind);
 		return keyItem;
@@ -77,27 +69,27 @@ public class BiHeap {
 
 	/** Function heapifyUp **/
 	private void heapifyUp(int childInd) {
-		GridNode tmp = heap[childInd];
-		while (childInd > 0 && tmp.getF() < heap[parent(childInd)].getF()) {
-			heap[childInd] = heap[parent(childInd)];
+		GridNode tmp = heap.get(childInd);
+		while (childInd > 0 && tmp.getF() < heap.get(parent(childInd)).getF()) {
+			heap.set(childInd, heap.get(parent(childInd)));
 			childInd = parent(childInd);
 		}
-		heap[childInd] = tmp;
+		heap.set(childInd, tmp);
 	}
 
 	/** Function heapifyDown **/
 	private void heapifyDown(int ind) {
 		int child;
-		GridNode tmp = heap[ind];
+		GridNode tmp = heap.get(ind);
 		while (kthChild(ind, 1) < heapSize) {
 			child = minChild(ind);
-			if (heap[child].getF() < tmp.getF())
-				heap[ind] = heap[child];
+			if (heap.get(child).getF() < tmp.getF())
+				heap.set(ind, heap.get(child));
 			else
 				break;
 			ind = child;
 		}
-		heap[ind] = tmp;
+		heap.set(ind, tmp);
 	}
 
 	/** Function to get smallest child **/
@@ -106,7 +98,7 @@ public class BiHeap {
 		int k = 2;
 		int pos = kthChild(ind, k);
 		while ((k <= d) && (pos < heapSize)) {
-			if (heap[pos].getF() < heap[bestChild].getF())
+			if (heap.get(pos).getF() < heap.get(bestChild).getF())
 				bestChild = pos;
 			pos = kthChild(ind, k++);
 		}
@@ -117,7 +109,7 @@ public class BiHeap {
 	public void printHeap() {
 		System.out.print("\nHeap = ");
 		for (int i = 0; i < heapSize; i++)
-			System.out.print(heap[i] + " ");
+			System.out.print(heap.get(i) + " ");
 		System.out.println();
 	}
 }
