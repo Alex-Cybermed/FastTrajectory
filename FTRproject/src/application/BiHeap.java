@@ -18,13 +18,13 @@ public class BiHeap<E> extends ArrayList<E> implements Queue<E> {
 	}
 
 	/** Function to check if heap is empty **/
-	public boolean isEmpty() {
-		return heapSize == 0;
-	}
+//	public boolean isEmpty() {
+//		return (heapSize == 0);
+//	}
 
 	/** Clear heap */
 	public void makeEmpty() {
-		heapSize = 0;
+		heap.clear();
 	}
 
 	/** Function to get index parent of i **/
@@ -40,8 +40,9 @@ public class BiHeap<E> extends ArrayList<E> implements Queue<E> {
 	/** Function to insert element */
 	public void insert(GridNode x) {
 		/** Percolate up **/
+		heapSize++;
 		heap.add(x);
-		heapifyUp(heapSize - 1);
+		heapifyUp(heapSize-1);
 	}
 	
 	public boolean contains(GridNode n) {
@@ -49,12 +50,13 @@ public class BiHeap<E> extends ArrayList<E> implements Queue<E> {
 	}
 	
 	public boolean remove(GridNode n) {
+		heapSize--;
 		return heap.remove(n);
 	}
 
 	/** Function to find least element **/
 	public GridNode findMin() {
-		if (isEmpty())
+		if (heapSize==0)
 			throw new NoSuchElementException("Underflow Exception");
 		return heap.get(0);
 	}
@@ -67,14 +69,14 @@ public class BiHeap<E> extends ArrayList<E> implements Queue<E> {
 	}
 
 	/** Function to delete element at an index **/
-	public GridNode delete(int ind) {
-		if (isEmpty())
+	public void delete(int ind) {
+		if (heapSize==0)
 			throw new NoSuchElementException("Underflow Exception");
-		GridNode keyItem = heap.get(ind);
+//		GridNode keyItem = heap.get(ind);
 		heap.set(ind, heap.get(heap.size() - 1));
 		heapSize--;
 		heapifyDown(ind);
-		return keyItem;
+		
 	}
 
 	/** Function heapifyUp **/
@@ -119,7 +121,7 @@ public class BiHeap<E> extends ArrayList<E> implements Queue<E> {
 	public void printHeap() {
 		System.out.print("\nHeap = ");
 		for (int i = 0; i < heapSize; i++)
-			System.out.print(heap.get(i) + " ");
+			System.out.print(heap.get(i).getX()+","+heap.get(i).getY() + " ");
 		System.out.println();
 	}
 

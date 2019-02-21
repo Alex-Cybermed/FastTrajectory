@@ -4,15 +4,15 @@ import java.util.NoSuchElementException;
 
 public class DoubleLL<E> {
 
-	private Node head;
-	private Node tail;
-	private int size;
+	public Node head;
+	public Node tail;
+	public int size;
 
 	public DoubleLL() {
-//		head = new Node(null, tail, tail);
-//		tail = new Node(null, head, head);
-		head.next = tail;
-		tail.prev = tail;
+		head = new Node(null, tail, tail);
+		tail = new Node(null, head, head);
+//		head.next = tail;
+//		tail.prev = tail;
 		size = 0;
 	}
 
@@ -22,7 +22,7 @@ public class DoubleLL<E> {
 	 * @author java2novice
 	 *
 	 */
-	private class Node {
+	public class Node {
 		E element;
 		Node next;
 		Node prev;

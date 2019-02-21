@@ -53,13 +53,13 @@ public class board {
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
 				if (gridBoard[i][j].getStatus().equals("A")) {
-					System.out.printf("A");
+					System.out.printf("A ");
 				} else if (gridBoard[i][j].getStatus().equals("T")) {
-					System.out.printf("T");
+					System.out.printf("T ");
 				} else if (gridBoard[i][j].getStatus().equals("X")) {
-					System.out.printf("X");
+					System.out.printf("X ");
 				} else if (gridBoard[i][j].getStatus().equals("_")) {
-					System.out.printf("_");
+					System.out.printf("_ ");
 				}
 			}
 			System.out.println();
@@ -123,16 +123,19 @@ public class board {
 	}
 
 	public static void main(String[] args) throws IOException {
-		int i;
-		for (i = 1; i <= numOfMap; i++) {
-			GridNode[][] gridBoard = initial();
-			FileOut(gridBoard, i);
-		}
+		ForwardAStar fa = new ForwardAStar();
+//		int i;
+//		for (i = 1; i <= numOfMap; i++) {
+//			GridNode[][] gridBoard = initial();
+//			FileOut(gridBoard, i);
+//		}
 		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		System.out.println("Input the number of map you want to test:" + n);
+//		int n = sc.nextInt();
+		int n = 2;
+//		System.out.println("Input the number of map you want to test:" + n);
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
 		GridNode[][] out = fileIn(fileAddress);
+		fa.forwardA(out);
 		printMap(out);
 		System.out.println(out.length);
 		sc.close();
