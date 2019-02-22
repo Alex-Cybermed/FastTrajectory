@@ -59,7 +59,7 @@ public class BiHeap<E> extends ArrayList<E> implements Queue<E> {
 
 	/** Function to find least element **/
 	public GridNode findMin() {
-//		System.out.println("size"+heap.size());
+		System.out.println("size"+heap.size());
 		if (heap.size()==0)
 			throw new NoSuchElementException("Underflow Exception");
 		return getI(0);
@@ -132,7 +132,9 @@ public class BiHeap<E> extends ArrayList<E> implements Queue<E> {
 	public void printHeap() {
 		System.out.print("Heap = ");
 		for (int i = 0; i < heap.size(); i++)
-			System.out.print(heap.get(i).getX()+","+heap.get(i).getY() + " ");
+//			System.out.print(heap.get(i).getX()+","+heap.get(i).getY() + " ");
+		System.out.print(heap.get(i).getnID()+" ");
+
 		System.out.println();
 	}
 

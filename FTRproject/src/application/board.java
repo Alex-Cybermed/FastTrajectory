@@ -70,6 +70,31 @@ public class board {
 			System.out.print("--");
 		}
 	}
+	public static  void printAIMap(GridNode[][] gridBoard, GridNode A) {
+//		for (int k = 0; k < x; k++) {
+//			System.out.print(k+" ");
+//		}
+		System.out.println();
+		for (int i = 0; i < x; i++) {
+			for (int j = 0; j < x; j++) {
+				if (gridBoard[i][j].getnID()==A.getnID()) {
+					System.out.printf("A ");
+				} else if (gridBoard[i][j].getStatus().equals("T")) {
+					System.out.printf("T ");
+				} else if (gridBoard[i][j].isBlocked()) {
+					System.out.printf("X ");
+				} else if (!gridBoard[i][j].isBlocked()) {
+//					System.out.printf("_ ");
+					System.out.print(gridBoard[i][j].getF()+" ");
+				}
+			}
+//			System.out.print(i);
+			System.out.println();
+		}
+		for (int k = 0; k < x; k++) {
+			System.out.print("--");
+		}
+	}
 
 	public static void FileOut(GridNode[][] gridBoard, int k) throws IOException {
 		try {
@@ -142,4 +167,6 @@ public class board {
 //		System.out.println(out.length);
 		sc.close();
 	}
+
+
 }

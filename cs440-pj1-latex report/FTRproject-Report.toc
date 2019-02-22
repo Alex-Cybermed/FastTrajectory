@@ -1,0 +1,7 @@
+\contentsline {section}{\numberline {1}Part 0: Setup your Environments }{1}
+\contentsline {section}{\numberline {2}Part1:Understanding the methods}{1}
+\contentsline {section}{\numberline {3}Part 2: Setup your Environments }{1}
+\contentsline {section}{\numberline {4}Part 3 - Forward vs. Backward }{1}
+\contentsline {section}{\numberline {5}Part 4 - Heuristics in the Adaptive A* }{1}
+\contentsline {section}{\numberline {6}Part 5 - Heuristics in the Adaptive A*}{1}
+\contentsline {section}{\numberline {7}Part 6 - Memory Issues}{1}
