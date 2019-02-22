@@ -91,7 +91,7 @@ public class DoubleLL<E> {
 			head = tmp;
 		}
 		size++;
-		System.out.println("adding: " + element);
+//		System.out.println("adding: " + element);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class DoubleLL<E> {
 		System.out.println("iterating forward..");
 		Node tmp = head;
 		while (tmp != null) {
-			System.out.println(tmp.element);
+			System.out.println(tmp.element.toString());
 			tmp = tmp.next;
 		}
 	}

@@ -47,7 +47,8 @@ public class board {
 
 	public static void printMap(GridNode[][] gridBoard) {
 		for (int k = 0; k < x; k++) {
-			System.out.print("--");
+			System.out.print(k+" ");
+//			System.out.print("- ");
 		}
 		System.out.println();
 		for (int i = 0; i < x; i++) {
@@ -62,6 +63,7 @@ public class board {
 					System.out.printf("_ ");
 				}
 			}
+			System.out.print(i);
 			System.out.println();
 		}
 		for (int k = 0; k < x; k++) {
@@ -131,13 +133,13 @@ public class board {
 //		}
 		Scanner sc = new Scanner(System.in);
 //		int n = sc.nextInt();
-		int n = 2;
+		int n = 1;
 //		System.out.println("Input the number of map you want to test:" + n);
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
 		GridNode[][] out = fileIn(fileAddress);
 		fa.forwardA(out);
 		printMap(out);
-		System.out.println(out.length);
+//		System.out.println(out.length);
 		sc.close();
 	}
 }

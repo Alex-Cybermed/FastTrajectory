@@ -3,11 +3,12 @@ package application;
 import java.util.ArrayList;
 
 public class GridNode {
-
+	private int nID;
 	private int X;
 	private int Y;
 	private String status;
 	private boolean visited;
+	private boolean isBlocked;
 	private GridNode parent;
 	private int g;
 	private int f;
@@ -21,7 +22,7 @@ public class GridNode {
 		this.status = string;
 	}
 
-	public GridNode(int X, int Y, String status, boolean visited, GridNode parent, int g, int f, int h, int search) {
+	public GridNode(int nID, int X, int Y, String status, boolean visited, GridNode parent, int g, int f, int h, int search) {
 		this.X = X;
 		this.Y = Y;
 		this.status = status;
@@ -107,5 +108,31 @@ public class GridNode {
 
 	public void setSearch(int search) {
 		this.search = search;
+	}
+
+	public int getnID() {
+		return nID;
+	}
+
+	public void setnID(int nID) {
+		this.nID = nID;
+	}
+
+	public void setAdj(ArrayList<GridNode> adj) {
+		this.adj = adj;
+	}
+	
+	@Override
+	public String toString() {
+		return " "+nID ;
+		
+	}
+
+	public boolean isBlocked() {
+		return isBlocked;
+	}
+
+	public void setBlocked(boolean isBlocked) {
+		this.isBlocked = isBlocked;
 	}
 }

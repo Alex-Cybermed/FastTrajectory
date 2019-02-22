@@ -14,9 +14,9 @@ public class ForwardAStar {
 	public void forwardA(GridNode[][] gridMap) {
 		GridNode A = new GridNode(0, 0, null);
 		GridNode T = new GridNode(0, 0, null);
-		// traverse whole map initial search as 0 and find out A and T
 		for (int i = 0; i < gridMap.length; i++) {
 			for (int j = 0; j < gridMap.length; j++) {
+				gridMap[i][j].setnID(i*gridMap.length+j);
 				gridMap[i][j].setSearch(0);
 				if (gridMap[i][j].getStatus().equals("A")) {
 					A = gridMap[i][j];
@@ -26,12 +26,11 @@ public class ForwardAStar {
 				}
 			}
 		}
-		// set whole map with consistent h-value
 		setHvalue(gridMap, T);
-		// tree pointer point to current GridNode
 		GridNode ptr = new GridNode(0, 0, null);
 		ptr = A;
-		while (ptr != T) {
+		while (ptr.getnID() != T.getnID()) {
+			System.out.println("++++++++++++++++_____________++++++++++++++++++");
 			counter = counter + 1;
 			ptr.setG(0);
 			ptr.setSearch(counter);
@@ -42,11 +41,18 @@ public class ForwardAStar {
 			ptr.setF(ptr.getG() + ptr.getH());
 			openList.insert(ptr);
 //			openList.printHeap();
-			ComputerPath(gridMap, A, T, openList);
-			if (openList.isEmpty()) {
+			setBlocked(ADJ(gridMap,ptr));
+			ComputerPath(gridMap, ptr, T);
+			System.out.print("Before check empty:");
+			openList.printHeap();
+			if (openList.size()==0) {
+				System.out.print("After check empty:");			
+				openList.printHeap();
+				closeList.iterateForward();
 				System.out.println("Fail");
 				return;
 			}
+			//wonderland loop
 			DoubleLL<GridNode>.Node n;
 			for (n = closeList.head; !n.next.element.getStatus().equals("X"); n = n.next) {
 				ptr = n.element;
@@ -57,30 +63,70 @@ public class ForwardAStar {
 
 	}
 
-	public void ComputerPath(GridNode[][] gridMap, GridNode A, GridNode T, BiHeap<GridNode> ol) {
-		while (T.getG() > ol.findMin().getF()) {
-			GridNode s = ol.findMin();
-			closeList.addLast(ol.deleteMin());
-			ArrayList<GridNode> adj = ADJ(gridMap, s);
+	public void ComputerPath(GridNode[][] gridMap, GridNode ptr, GridNode T) {
+		
+		while (T.getG() > openList.findMin().getF()) {
+			//openList.printHeap();
+			GridNode visited =openList.deleteMin();
+			visited.setVisited(true);
+			closeList.addLast(visited);
+			ArrayList<GridNode> adj = ADJ(gridMap, visited);
 			for (int i = 0;i<adj.size();i++) {
-				GridNode n = adj.get(i);
-				if (n.getSearch() < counter) {
-					n.setG(Inf);
-					n.setSearch(counter);
+				if(adj.get(i).isVisited() || adj.get(i).isBlocked()) {
+					
+				}else {
+				GridNode action = adj.get(i);
+				if (action.getSearch() < counter) {
+					action.setG(Inf);
+					action.setSearch(counter);
 				}
-				if (n.getG() > (s.getG() + cost)) {
-					n.setG(s.getG() + cost);
-					n.setParent(s);
-					if (ol.contains(n)) {
-						ol.remove(n);
+				if (action.getG() > (visited.getG() + cost)) {
+					action.setG(visited.getG() + cost);
+					action.setParent(visited);
+					System.out.println("action:"+action.getX()+""+action.getY()+" "+"ptr:"+visited.getX()+""+visited.getY());
+					if (listContains(openList,action)) {
+						openList.remove(action);
+						System.out.println("Deleting "+ action.getX()+action.getY());
 					} else {
-						n.setF(n.getG() + n.getH());
-						ol.insert(n);
-						ol.printHeap();
+						action.setF(action.getG() + action.getH());
+						openList.insert(action);
+						System.out.println("==============================");
+						System.out.print("OpenList:");
+						openList.printHeap();
+						System.out.print("ClosedList:");
+						closeList.iterateForward();
+						System.out.println("==============================");
+
 					}
+				}
 				}
 			}
 		}
+	}
+	
+	public void setBlocked(ArrayList<GridNode> adj) {
+		for(int i = 0; i<adj.size();i++) {
+			if(adj.get(i).getStatus().equals("X")) {
+				adj.get(i).setBlocked(true);
+			}else {
+				//nothing~~~~~
+			}
+		}
+	}
+	
+	public boolean listContains(BiHeap<GridNode> list, GridNode obj) {
+		if(list.size()==0) {
+			return false;
+		}
+		int j;
+		for(j=0; j<list.size();j++) {
+//			System.out.println("j:"+j+" "+"size:"+list.size());
+//			System.out.println(list.getI(j).getnID()+" "+obj.getnID());
+			if(list.getI(j).getnID()==obj.getnID()) {
+				System.out.println("i am in!");
+				return true;}
+		}
+		return false;
 	}
 
 	public void setHvalue(GridNode[][] gridMap, GridNode Target) {
