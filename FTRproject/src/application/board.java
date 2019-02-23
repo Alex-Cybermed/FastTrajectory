@@ -151,7 +151,9 @@ public class board {
 
 	public static void main(String[] args) throws IOException {
 		ForwardAStar fa = new ForwardAStar();
-//		int i;
+		/*
+		Generate new maps
+		*/
 //		for (i = 1; i <= numOfMap; i++) {
 //			GridNode[][] gridBoard = initial();
 //			FileOut(gridBoard, i);
