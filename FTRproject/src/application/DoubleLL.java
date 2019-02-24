@@ -99,12 +99,13 @@ public class DoubleLL<E> {
 	 */
 	public void iterateForward() {
 
-		System.out.println("iterating forward..");
+//		System.out.println("iterating forward..");
 		Node tmp = head;
 		while (tmp != null) {
-			System.out.println(tmp.element.toString());
+			System.out.print(tmp.element.toString()+"");
 			tmp = tmp.next;
 		}
+		System.out.println();
 	}
 
 	/**

@@ -28,10 +28,11 @@ public class ForwardAStar {
 		}
 		GridNode ptr = new GridNode(0, 0, null);
 		ptr = A;
-		setHvalue(gridMap,T);
+		setHvalue(gridMap, T);
 		while (ptr.getnID() != T.getnID()) {
-			p("++++++++++++++++_____________++++++++++++++++++");
+			System.out.println("++++++++++++++++_____________++++++++++++++++++");
 			counter = counter + 1;
+//			resetGvalue(gridMap);
 			ptr.setG(0);
 			ptr.setSearch(counter);
 			T.setG(Inf);
@@ -42,49 +43,112 @@ public class ForwardAStar {
 			openList.insert(ptr);
 			// openList.printHeap();
 			setBlocked(ADJ(gridMap, ptr));
+			resetVisited(gridMap);
 			ComputerPath(gridMap, ptr, T);
-			//board.printAIMap(gridMap);
-			p("Before check empty:");
+			// board.printAIMap(gridMap);
+//			System.out.print("Before check empty:");
 //			openList.printHeap();
 			if (openList.size() == 0) {
-				p("After check empty:");
+//				System.out.print("After check empty:");
 //				openList.printHeap();
 				closeList.iterateForward();
-				p("Fail");
+				System.out.println("Fail");
 				return;
 			}
 			// wonderland loop
-			DoubleLL<GridNode>.Node n;
-			for (n = closeList.head; !n.next.element.getStatus().equals("X"); n = n.next) {
-				setBlocked(ADJ(gridMap, ptr));
-				ptr = n.element;
-				p("========wonderland=========");
-				board.printAIMap(gridMap, ptr);
-				p("========wonderland END=====");
+//			DoubleLL<GridNode>.Node n = closeList.head;
+//			for (n = closeList.head; !n.next.element.getStatus().equals("X"); n = n.next) {
+//				setBlocked(ADJ(gridMap, ptr));
+//				ptr = n.element;
+//				System.out.println("========wonderland=========");
+//				board.printAIMap(gridMap, ptr);
+//				System.out.println("========wonderland END=====");
+//
+//			}
+//			GridNode m = closeList.tail.element;
+//			p("THE PATH:");
+//			while (m.getParent() != null) {
+//				p(m.getParent().getnID() + "");
+//				m = m.getParent();
+//			}
+//			while(m.prev.element.getParent()!=null) {
+//				
+//				p("888888 "+m.element.getnID()+" ");
+//				m = m.element.getParent();
+//			}
+//			p("Print wonderland loop XXXXXXXXXXXXXXXXXX");
+//			while (n != null) {
+//				System.out.println("node: " + n.element.getnID() + " " + " Parent: " + n.element.getParent() + "");
+//				n = n.next;
+//			}
 
+			ArrayList<GridNode> path = new ArrayList<GridNode>();
+			GridNode L = closeList.tail.element;
+//			p(path.size()+"");
+//			for (int u = 0; u < path.size(); u++) {
+//				p(path.get(u) + "");
+//			}
+			while (L != null) {
+				p(L.getnID()+"");
+				path.add(L);
+				L = L.getParent();
+			}
+//			p("++++++======++++++======++++++======++++++======");
+			
+			for (int pt = path.size() - 1; pt >= 0; pt--) {
+				if (path.get(pt).getStatus().equals("X")) {
+					break;
+				} else {
+					ptr = path.get(pt);
+				}
+			}
+			
+			p("");
+			p("=============Beginning of Last Call================");
+			board.printAIMap(gridMap, ptr);
+			p("=========================END=======================");
+			p("");
+			int len = gridMap.length;
+			p("length is "+len);
+			if(ptr.getH()==1) {
+				break;
 			}
 
 		}
-		p("success");
+		System.out.println("success");
 
 	}
 
 	public void ComputerPath(GridNode[][] gridMap, GridNode ptr, GridNode T) {
+		p("");
+		p("=============Beginning of ComputerPath=============");
 		board.printAIMap(gridMap, ptr);
+		p("=========================END=======================");
 		p("");
 		while (T.getG() > openList.getByIndex(0).getF()) {
-			p("Print Heap at the beginning of ComputerPath: ");
-			openList.printHeap();
-			p("IN WHILE LOOP");
+//			System.out.println("Print Heap at the beginning of ComputerPath: ");
+//			openList.printHeap();
+//			System.out.println("IN WHILE LOOP");
+//			board.printAIMap(gridMap, ptr);
+//			// openList.printHeap();
+//			openList.printHeap();
+//			p(openList.size() + "");
+			p("");
+			p("=============Beginning of While Loop=============");
 			board.printAIMap(gridMap, ptr);
-			// openList.printHeap();
+			p("=======================END=======================");
+			p("");
 			GridNode visited = openList.delete();
 			visited.setVisited(true);
 			closeList.addLast(visited);
 			ArrayList<GridNode> adj = ADJ(gridMap, visited);
-			for(int w = 0; w<adj.size();w++) {
-				System.out.print(adj.get(w).getnID()+" ");
+			System.out.print("Current Node's neigbhors: ");
+			for (int w = 0; w < adj.size(); w++) {
+				System.out.print(adj.get(w).getnID() + " ");
 			}
+			p("");
+			System.out.print("CloseList: ");
+			closeList.iterateForward();
 			p("");
 			for (int i = 0; i < adj.size(); i++) {
 				if (adj.get(i).isVisited() || adj.get(i).isBlocked()) {
@@ -98,20 +162,23 @@ public class ForwardAStar {
 					if (action.getG() > (visited.getG() + cost)) {
 						action.setG(visited.getG() + cost);
 						action.setParent(visited);
-						p("action:" + action.getX() + "" + action.getY() + " " + "ptr:"
-								+ visited.getX() + "" + visited.getY());
+//						System.out.println("action:" + action.getX() + "" + action.getY() + " " + "ptr:"
+//								+ visited.getX() + "" + visited.getY());
 						if (listContains(openList, action)) {
 							openList.remove(action);
-							p("Deleting " + action.getX() + action.getY());
+							System.out.println("Deleting " + action.getX() + action.getY());
 						} else {
 							action.setF(action.getG() + action.getH());
 							openList.insert(action);
-							p("==============================");
-							System.out.print("OpenList:");
-//							openList.printHeap();
+							p("");
+							System.out.println("============End of Path==================");
+//							System.out.println("OpenList:");
+							openList.printHeap();
 							System.out.print("ClosedList:");
 							closeList.iterateForward();
-							p("==============================");
+							System.out.println("================End======================");
+							p("");
+
 
 						}
 					}
@@ -127,6 +194,17 @@ public class ForwardAStar {
 			}
 		}
 	}
+	
+//	public void
+
+	public void resetVisited(GridNode[][] gridMap) {
+		for (int i = 0; i < gridMap.length; i++) {
+			for (int j = 0; j < gridMap.length; j++) {
+				gridMap[i][j].setVisited(false);
+				gridMap[i][j].setParent(null);
+			}
+		}
+	}
 
 	public boolean listContains(BH<GridNode> list, GridNode obj) {
 		if (list.size() == 0) {
@@ -134,10 +212,10 @@ public class ForwardAStar {
 		}
 		int j;
 		for (j = 0; j < list.size(); j++) {
-			// p("j:"+j+" "+"size:"+list.size());
-			// p(list.getI(j).getnID()+" "+obj.getnID());
+			// System.out.println("j:"+j+" "+"size:"+list.size());
+			// System.out.println(list.getI(j).getnID()+" "+obj.getnID());
 			if (list.getByIndex(j).getnID() == obj.getnID()) {
-				p("i am in!");
+				System.out.println("i am in!");
 				return true;
 			}
 		}
@@ -173,7 +251,7 @@ public class ForwardAStar {
 		}
 		return adjacent;
 	}
-	
+
 	public static void p(String s) {
 		System.out.println(s);
 	}

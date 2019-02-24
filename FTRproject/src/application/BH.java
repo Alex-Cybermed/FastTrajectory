@@ -27,17 +27,21 @@ public class BH<E> extends ArrayList<E> {
 
 	public void insert(GridNode n) {
 		heap.add(n);
-		goUp(size()-1);
+		goUp(size() - 1);
 	}
-	
+
 	public void removeByIndex(int index) {
-		if(size()==0) {
+		if (size() == 0) {
 			throw new NoSuchElementException("Underflow Exception");
-		}else {
-			setByIndex(index,getByIndex(size()-1));
-			heap.remove(size()-1);
-			goDown(index);
-			
+		} else {
+			setByIndex(index, getByIndex(size() - 1));
+//			System.out.println("IN removeBYINDEX: " + size());
+			heap.remove(size() - 1);
+			if (size() <= 1) {
+
+			} else {
+				goDown(index);
+			}
 		}
 	}
 
@@ -63,10 +67,14 @@ public class BH<E> extends ArrayList<E> {
 		int minChild = 0;
 		int leftChild = parentIndex * 2 + 1;
 		int rightChild = parentIndex * 2 + 2;
-		if (getByIndex(leftChild).getF() <= getByIndex(rightChild).getF()) {
+		if (rightChild >= size()) {
 			minChild = leftChild;
 		} else {
-			minChild = rightChild;
+			if (getByIndex(leftChild).getF() <= getByIndex(rightChild).getF()) {
+				minChild = leftChild;
+			} else {
+				minChild = rightChild;
+			}
 		}
 		return minChild;
 	}
@@ -82,12 +90,13 @@ public class BH<E> extends ArrayList<E> {
 
 	public void goDown(int index) {
 		int child;
+//		System.out.println("IN GODOWN: " + size() + " " + index);
 		GridNode temp = getByIndex(index);
-		while((index*2+1)<size()) {
+		while ((index * 2 + 1) < size()) {
 			child = minChild(index);
-			if(getByIndex(child).getF()<temp.getF()) {
+			if (getByIndex(child).getF() < temp.getF()) {
 				setByIndex(index, getByIndex(child));
-			}else {
+			} else {
 				break;
 			}
 			index = child;
@@ -96,7 +105,7 @@ public class BH<E> extends ArrayList<E> {
 	}
 
 	public void printHeap() {
-		System.out.print("Heap(Node ID): ");
+		System.out.print("Heap List (nID): ");
 		for (int i = 0; i < size(); i++) {
 //			System.out.println("in printHeap:"+size());
 
@@ -104,13 +113,13 @@ public class BH<E> extends ArrayList<E> {
 
 		}
 		System.out.println();
-		System.out.print("Heap(F-value): ");
-		for (int i = 0; i < size(); i++) {
-//			System.out.println("in printHeap:"+size());
-
-			System.out.print(getByIndex(i).getF() + " ");
-
-		}
-		System.out.println();
+//		System.out.print("Heap(F-value): ");
+//		for (int i = 0; i < size(); i++) {
+////			System.out.println("in printHeap:"+size());
+//
+//			System.out.print(getByIndex(i).getF() + " ");
+//
+//		}
+//		System.out.println();
 	}
 }

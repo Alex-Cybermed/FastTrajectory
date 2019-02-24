@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class board {
 
-	static int x = 5;
+	static int x = 101;
 	static int numOfMap = 10;
 
 	public static GridNode[][] initial() {
@@ -71,9 +71,9 @@ public class board {
 		}
 	}
 	public static  void printAIMap(GridNode[][] gridBoard, GridNode A) {
-//		for (int k = 0; k < x; k++) {
-//			System.out.print(k+" ");
-//		}
+		for (int k = 0; k < x; k++) {
+			System.out.print("--");
+		}
 		System.out.println();
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
@@ -84,8 +84,8 @@ public class board {
 				} else if (gridBoard[i][j].isBlocked()) {
 					System.out.printf("X ");
 				} else if (!gridBoard[i][j].isBlocked()) {
-//					System.out.printf("_ ");
-					System.out.print(gridBoard[i][j].getF()+" ");
+					System.out.printf("_ ");
+//					System.out.print(gridBoard[i][j].getF()+" ");
 				}
 			}
 //			System.out.print(i);
@@ -94,6 +94,7 @@ public class board {
 		for (int k = 0; k < x; k++) {
 			System.out.print("--");
 		}
+		System.out.println();
 	}
 
 	public static void FileOut(GridNode[][] gridBoard, int k) throws IOException {
@@ -150,24 +151,31 @@ public class board {
 	}
 
 	public static void main(String[] args) throws IOException {
+		long startTime = System.nanoTime();
 		ForwardAStar fa = new ForwardAStar();
-		/*
-		Generate new maps
-		*/
-//		for (i = 1; i <= numOfMap; i++) {
+//		/*
+//		Generate new maps
+//		*/
+//		for (int i = 1; i <= numOfMap; i++) {
 //			GridNode[][] gridBoard = initial();
 //			FileOut(gridBoard, i);
 //		}
-		Scanner sc = new Scanner(System.in);
+		
+//		Scanner sc = new Scanner(System.in);
 //		int n = sc.nextInt();
-		int n = 1;
+		int n = 2;
 //		System.out.println("Input the number of map you want to test:" + n);
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
 		GridNode[][] out = fileIn(fileAddress);
 		fa.forwardA(out);
-		printMap(out);
+//		printMap(out);
 //		System.out.println(out.length);
-		sc.close();
+//		sc.close();
+//		long startTime = System.nanoTime();
+//		.....your program....
+		long endTime   = System.nanoTime();
+		long totalTime = endTime - startTime;
+		System.out.println("total time:"+totalTime);
 	}
 
 
