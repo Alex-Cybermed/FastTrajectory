@@ -163,7 +163,7 @@ public class board {
 		
 //		Scanner sc = new Scanner(System.in);
 //		int n = sc.nextInt();
-		int n = 2;
+		int n = 4;
 //		System.out.println("Input the number of map you want to test:" + n);
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
 		GridNode[][] out = fileIn(fileAddress);
