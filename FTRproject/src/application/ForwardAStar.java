@@ -30,7 +30,9 @@ public class ForwardAStar {
 		ptr = A;
 		setHvalue(gridMap, T);
 		while (ptr.getnID() != T.getnID()) {
-			System.out.println("++++++++++++++++_____________++++++++++++++++++");
+//			p("===========================================================================================");
+//			p("=======================================New Procedure=======================================");
+//			p("===========================================================================================");
 			counter = counter + 1;
 //			resetGvalue(gridMap);
 			ptr.setG(0);
@@ -52,7 +54,7 @@ public class ForwardAStar {
 			if (openList.size() == 0) {
 //				System.out.print("After check empty:");
 //				openList.printHeap();
-				closeList.iterateForward();
+//				closeList.iterateForward();
 				System.out.println("Fail");
 				return;
 			}
@@ -90,7 +92,7 @@ public class ForwardAStar {
 //				p(path.get(u) + "");
 //			}
 			while (L != null) {
-				p(L.getnID()+"");
+//				p(L.getnID()+"");
 				path.add(L);
 				L = L.getParent();
 			}
@@ -104,28 +106,27 @@ public class ForwardAStar {
 				}
 			}
 			
-			p("");
-			p("=============Beginning of Last Call================");
-			board.printAIMap(gridMap, ptr);
-			p("=========================END=======================");
-			p("");
-			int len = gridMap.length;
-			p("length is "+len);
+//			p("");
+//			p("=============Beginning of Last Call================");
+//			board.printAIMap(gridMap, ptr);
+//			p("=========================END=======================");
+//			p("");
+//			int len = gridMap.length;
+//			p("length is "+len);
 			if(ptr.getH()==1) {
 				break;
 			}
-
 		}
 		System.out.println("success");
 
 	}
 
 	public void ComputerPath(GridNode[][] gridMap, GridNode ptr, GridNode T) {
-		p("");
-		p("=============Beginning of ComputerPath=============");
-		board.printAIMap(gridMap, ptr);
-		p("=========================END=======================");
-		p("");
+//		p("");
+//		p("=============Beginning of ComputerPath=============");
+//		board.printAIMap(gridMap, ptr);
+//		p("=========================END=======================");
+//		p("");
 		while (T.getG() > openList.getByIndex(0).getF()) {
 //			System.out.println("Print Heap at the beginning of ComputerPath: ");
 //			openList.printHeap();
@@ -134,26 +135,30 @@ public class ForwardAStar {
 //			// openList.printHeap();
 //			openList.printHeap();
 //			p(openList.size() + "");
-			p("");
-			p("=============Beginning of While Loop=============");
-			board.printAIMap(gridMap, ptr);
-			p("=======================END=======================");
-			p("");
+//			p("");
+//			p("=============Beginning of While Loop=============");
+//			board.printAIMap(gridMap, ptr);
+//			p("=======================END=======================");
+//			p("");
 			GridNode visited = openList.delete();
 			visited.setVisited(true);
 			closeList.addLast(visited);
 			ArrayList<GridNode> adj = ADJ(gridMap, visited);
-			System.out.print("Current Node's neigbhors: ");
-			for (int w = 0; w < adj.size(); w++) {
-				System.out.print(adj.get(w).getnID() + " ");
-			}
-			p("");
-			System.out.print("CloseList: ");
-			closeList.iterateForward();
-			p("");
+//			System.out.print("Current Node's neigbhors: ");
+//			for (int w = 0; w < adj.size(); w++) {
+//				System.out.print(adj.get(w).getnID() + " ");
+//			}
+//			p("");
+//			System.out.print("CloseList: ");
+//			closeList.iterateForward();
+//			p("");
 			for (int i = 0; i < adj.size(); i++) {
 				if (adj.get(i).isVisited() || adj.get(i).isBlocked()) {
-
+					if(i==(adj.size()-1)) {
+						if(openList.size()==0) {
+							return;
+						}
+					}
 				} else {
 					GridNode action = adj.get(i);
 					if (action.getSearch() < counter) {
@@ -167,18 +172,18 @@ public class ForwardAStar {
 //								+ visited.getX() + "" + visited.getY());
 						if (listContains(openList, action)) {
 							openList.remove(action);
-							System.out.println("Deleting " + action.getX() + action.getY());
+//							System.out.println("Deleting " + action.getX() + action.getY());
 						} else {
 							action.setF(action.getG() + action.getH());
 							openList.insert(action);
-							p("");
-							System.out.println("============End of Path==================");
-//							System.out.println("OpenList:");
-							openList.printHeap();
-							System.out.print("ClosedList:");
-							closeList.iterateForward();
-							System.out.println("================End======================");
-							p("");
+//							p("");
+//							System.out.println("============End of Path==================");
+////							System.out.println("OpenList:");
+//							openList.printHeap();
+//							System.out.print("ClosedList:");
+//							closeList.iterateForward();
+//							System.out.println("================End======================");
+//							p("");
 
 
 						}
@@ -216,7 +221,7 @@ public class ForwardAStar {
 			// System.out.println("j:"+j+" "+"size:"+list.size());
 			// System.out.println(list.getI(j).getnID()+" "+obj.getnID());
 			if (list.getByIndex(j).getnID() == obj.getnID()) {
-				System.out.println("i am in!");
+//				System.out.println("i am in!");
 				return true;
 			}
 		}
