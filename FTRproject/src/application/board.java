@@ -168,7 +168,7 @@ public class board {
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
 		GridNode[][] out = fileIn(fileAddress);
 		fa.forwardA(out);
-//		printMap(out);
+//		printAIMap(out);
 //		System.out.println(out.length);
 //		sc.close();
 //		long startTime = System.nanoTime();
