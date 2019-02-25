@@ -1,5 +1,5 @@
-X X X _ _ 
-X _ _ X X 
-T _ X X X 
-_ _ _ _ _ 
-A X _ _ _ 
+A _ X _ X 
+X X _ _ _ 
+X _ T X X 
+_ _ _ _ X 
+_ _ X X _ 

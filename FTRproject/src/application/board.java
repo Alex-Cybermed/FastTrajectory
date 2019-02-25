@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class board {
 
-	static int x = 101;
+	static int x = 5;
 	static int numOfMap = 10;
 
 	public static GridNode[][] initial() {
@@ -160,10 +160,10 @@ public class board {
 //			GridNode[][] gridBoard = initial();
 //			FileOut(gridBoard, i);
 //		}
-		
+//		
 //		Scanner sc = new Scanner(System.in);
 //		int n = sc.nextInt();
-		int n = 2;
+		int n = 1;
 //		System.out.println("Input the number of map you want to test:" + n);
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
 		GridNode[][] out = fileIn(fileAddress);
