@@ -53,7 +53,7 @@ public class ForwardAStar {
 			if (openList.size() == 0) {
 //				System.out.print("After check empty:");
 //				openList.printHeap();
-				closeList.iterateForward();
+//				closeList.iterateForward();
 				System.out.println("Fail");
 				return;
 			}
@@ -115,7 +115,6 @@ public class ForwardAStar {
 			if(ptr.getH()==1) {
 				break;
 			}
-
 		}
 		System.out.println("success");
 
@@ -154,7 +153,11 @@ public class ForwardAStar {
 //			p("");
 			for (int i = 0; i < adj.size(); i++) {
 				if (adj.get(i).isVisited() || adj.get(i).isBlocked()) {
-
+					if(i==(adj.size()-1)) {
+						if(openList.size()==0) {
+							return;
+						}
+					}
 				} else {
 					GridNode action = adj.get(i);
 					if (action.getSearch() < counter) {
