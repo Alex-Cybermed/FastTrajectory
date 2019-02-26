@@ -12,7 +12,7 @@ public class ForwardAStar {
 	public int cost = 1;
 	public Integer Inf = Integer.MAX_VALUE;
 
-	public void forwardA(GridNode[][] gridMap) {
+	public void Forward(GridNode[][] gridMap) {
 		GridNode A = new GridNode(0, 0, null);
 		GridNode T = new GridNode(0, 0, null);
 		for (int i = 0; i < gridMap.length; i++) {
@@ -102,6 +102,7 @@ public class ForwardAStar {
 				if (path.get(pt).getStatus().equals("X")) {
 					break;
 				} else {
+//					ptr.setStatus("*");
 					ptr = path.get(pt);
 				}
 			}
@@ -114,6 +115,7 @@ public class ForwardAStar {
 //			int len = gridMap.length;
 //			p("length is "+len);
 			if(ptr.getH()==1) {
+				board.printAIMap(gridMap, ptr,T);
 				break;
 			}
 		}

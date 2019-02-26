@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class board {
 
 	static int x = 101;
-	static int numOfMap = 10;
+	static int numOfMap = 3;
 
 	public static GridNode[][] initial() {
 		GridNode[][] gridBoard = new GridNode[x][x];
@@ -70,7 +70,7 @@ public class board {
 			System.out.print("--");
 		}
 	}
-	public static  void printAIMap(GridNode[][] gridBoard, GridNode A) {
+	public static  void printAIMap(GridNode[][] gridBoard, GridNode A, GridNode T) {
 		for (int k = 0; k < x; k++) {
 			System.out.print("--");
 		}
@@ -79,13 +79,16 @@ public class board {
 			for (int j = 0; j < x; j++) {
 				if (gridBoard[i][j].getnID()==A.getnID()) {
 					System.out.printf("A ");
-				} else if (gridBoard[i][j].getStatus().equals("T")) {
+				} else if (gridBoard[i][j].getnID()==T.getnID()) {
 					System.out.printf("T ");
 				} else if (gridBoard[i][j].isBlocked()) {
 					System.out.printf("X ");
-				} else if (!gridBoard[i][j].isBlocked()) {
+				}  else if(gridBoard[i][j].getStatus().equals("*")) {
+					System.out.printf("* ");
+//					System.out.print(gridBoard[i][j].getParent().getnID()+" ");
+				}  else if (!gridBoard[i][j].isBlocked()) {
 					System.out.printf("_ ");
-//					System.out.print(gridBoard[i][j].getF()+" ");
+//					System.out.print(gridBoard[i][j].getH()+" ");
 				}
 			}
 //			System.out.print(i);
@@ -151,31 +154,36 @@ public class board {
 	}
 
 	public static void main(String[] args) throws IOException {
-		long startTime = System.nanoTime();
 		ForwardAStar fa = new ForwardAStar();
+		BackwardAStar ba = new BackwardAStar();
 //		/*
 //		Generate new maps
 //		*/
-//		for (int i = 1; i <= numOfMap; i++) {
+//		for (int i = numOfMap; i <= numOfMap; i++) {
 //			GridNode[][] gridBoard = initial();
 //			FileOut(gridBoard, i);
 //		}
 		
 //		Scanner sc = new Scanner(System.in);
 //		int n = sc.nextInt();
-		int n = 103;
+		int n = numOfMap;
 //		System.out.println("Input the number of map you want to test:" + n);
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
 		GridNode[][] out = fileIn(fileAddress);
-		fa.forwardA(out);
-//		printAIMap(out);
-//		System.out.println(out.length);
-//		sc.close();
-//		long startTime = System.nanoTime();
-//		.....your program....
-		long endTime   = System.nanoTime();
-		long totalTime = endTime - startTime;
-		System.out.println("total time:"+totalTime);
+		long fstime = System.nanoTime();
+		fa.Forward(out);
+		long fetime = System.nanoTime();
+		long bstime = System.nanoTime();
+		ba.Backward(out);
+		long betime = System.nanoTime();
+		long fnstime =(fetime-fstime);
+		long bnstime =(betime-bstime);
+		double fsecond = Math.pow(10, -9)*fnstime;
+		double bsecond = Math.pow(10, -9)*bnstime;
+		System.out.println("Forward time:"+fnstime);
+		System.out.println("Backward time:"+bnstime);
+		System.out.println("Forward second time:"+fsecond);
+		System.out.println("Backward second time:"+bsecond);
 	}
 
 
