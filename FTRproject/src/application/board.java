@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class board {
 
-	static int x = 101;
-	static int numOfMap = 3;
+	static int x = 5;
+	static int numOfMap = 2;
 
 	public static GridNode[][] initial() {
 		GridNode[][] gridBoard = new GridNode[x][x];
@@ -77,19 +77,21 @@ public class board {
 		System.out.println();
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
-				if (gridBoard[i][j].getnID()==A.getnID()) {
-					System.out.printf("A ");
-				} else if (gridBoard[i][j].getnID()==T.getnID()) {
-					System.out.printf("T ");
-				} else if (gridBoard[i][j].isBlocked()) {
-					System.out.printf("X ");
-				}  else if(gridBoard[i][j].getStatus().equals("*")) {
-					System.out.printf("* ");
-//					System.out.print(gridBoard[i][j].getParent().getnID()+" ");
-				}  else if (!gridBoard[i][j].isBlocked()) {
-					System.out.printf("_ ");
-//					System.out.print(gridBoard[i][j].getH()+" ");
-				}
+//				if (gridBoard[i][j].getnID()==A.getnID()) {
+//					System.out.printf("A ");
+//				} else if (gridBoard[i][j].getnID()==T.getnID()) {
+//					System.out.printf("T ");
+//				} else if (gridBoard[i][j].isBlocked()) {
+//					System.out.printf("X ");
+//				}  else if(gridBoard[i][j].getStatus().equals("*")) {
+//					System.out.printf("* ");
+////					System.out.print(gridBoard[i][j].getParent().getnID()+" ");
+//				}  else if (!gridBoard[i][j].isBlocked()) {
+//					System.out.printf("_ ");
+////					System.out.print(gridBoard[i][j].getH()+" ");
+//				}
+				System.out.print("ID:"+gridBoard[i][j].getnID());
+				System.out.print(" h"+gridBoard[i][j].getH()+"   ");
 			}
 //			System.out.print(i);
 			System.out.println();

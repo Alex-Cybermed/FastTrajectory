@@ -16,6 +16,7 @@ public class BackwardAStar {
 			for (int j = 0; j < gridMap.length; j++) {
 				gridMap[i][j].setnID(i * gridMap.length + j);
 				gridMap[i][j].setSearch(0);
+				gridMap[i][j].setBlocked(false);
 				if (gridMap[i][j].getStatus().equals("A")) {
 					A = gridMap[i][j];
 				}
@@ -28,19 +29,25 @@ public class BackwardAStar {
 		GridNode computerPTR = new GridNode(0, 0, null);
 		computerPTR = T;
 		ptr = A;
-		setHvalue(gridMap, A);
+//		setHvalue(gridMap, ptr);
 		while (ptr.getnID() != T.getnID()) {
+			
 			counter = counter + 1;
 			computerPTR.setG(0);
 			computerPTR.setSearch(counter);
 			A.setG(Inf);
+			setHvalue(gridMap, ptr);
 			A.setSearch(counter);
 			openList.clear();
 			closeList.reset();
 			computerPTR.setF(computerPTR.getG() + computerPTR.getH());
 			openList.insert(computerPTR);
 			// openList.printHeap();
-			setBlocked(ADJ(gridMap, ptr));
+			ArrayList<GridNode> adj =ADJ(gridMap, ptr);
+			setBlocked(adj);
+			sort(adj, 0, adj.size()-1);
+
+			System.out.println("adj list ="+ adj.toString());
 			resetVisited(gridMap);
 			ComputerPath(gridMap, computerPTR, A);
 			if (openList.size() == 0) {
@@ -54,6 +61,7 @@ public class BackwardAStar {
 //				ptr.setStatus("*");
 				L = L.getParent();
 			}
+			
 //			closeList.iterateForward();
 //			GridNode p = closeList.tail.element;
 //			while(p!=null) {
@@ -103,6 +111,7 @@ public class BackwardAStar {
 			visited.setVisited(true);
 			closeList.addLast(visited);
 			ArrayList<GridNode> adj = ADJ(gridMap, visited);
+			board.printAIMap(gridMap, ptr, ptr);
 //			System.out.print("Current Node's neigbhors: ");
 //			for (int w = 0; w < adj.size(); w++) {
 //				System.out.print(adj.get(w).getnID() + " ");
@@ -191,7 +200,7 @@ public class BackwardAStar {
 //		GridNode parent = new GridNode(-1, "_");
 		for (int i = 0; i < gridMap.length; i++) {
 			for (int j = 0; j < gridMap.length; j++) {
-				gridMap[i][j].setBlocked(false);
+//				gridMap[i][j].setBlocked(false);
 				rowNum = Math.abs(Target.getX() - i);
 				colNum = Math.abs(Target.getY() - j);
 				gridMap[i][j].setH(rowNum + colNum);
@@ -199,7 +208,63 @@ public class BackwardAStar {
 			}
 		}
 	}
+	
+	public void setBlocked(GridNode[][] gridMap, GridNode Target) {
+		for (int i = 0; i < gridMap.length; i++) {
+			for (int j = 0; j < gridMap.length; j++) {
+				gridMap[i][j].setBlocked(false);
+			}
+		}
+	}
+	
 
+
+    static int partition(ArrayList<GridNode> arr, int low, int high) 
+    { 
+        int pivot = arr.get(high).getH();  
+        
+        int i = (low-1); // index of smaller element 
+      
+        for (int j=low; j<high; j++) 
+        { 
+            // If current element is smaller than or 
+            // equal to pivot 
+            if (arr.get(j).getH() <= pivot) 
+            { 
+                i++; 
+  
+                // swap arr[i] and arr[j] 
+                GridNode temp = arr.get(i); 
+                arr.set(i, arr.get(j)); 
+                arr.set(j, temp); 
+            } 
+        } 
+  
+        // swap arr[i+1] and arr[high] (or pivot) 
+        GridNode temp = arr.get(i+1); 
+        arr.set(i+1, arr.get(high));
+        arr.set(high, temp);
+
+  
+        return i+1; 
+    } 
+
+    static void  sort(ArrayList<GridNode> arr, int low, int high) 
+    { 
+        if (low < high) 
+        { 
+            /* pi is partitioning index, arr[pi] is  
+              now at right place */
+            int pi = partition(arr, low, high); 
+  
+            // Recursively sort elements before 
+            // partition and after partition 
+            sort(arr, low, pi-1); 
+            sort(arr, pi+1, high); 
+            
+        } 
+    } 
+    
 	public ArrayList<GridNode> ADJ(GridNode[][] gridMap, GridNode curr) {
 		ArrayList<GridNode> adjacent = new ArrayList<GridNode>();
 		int x = gridMap.length;
@@ -215,6 +280,7 @@ public class BackwardAStar {
 		if (curr.getY() + 1 < x && !curr.isBlocked()) {
 			adjacent.add(gridMap[curr.getX()][curr.getY() + 1]);
 		}
+//		sort(adjacent, 0, adjacent.size()-1);
 		return adjacent;
 	}
 
