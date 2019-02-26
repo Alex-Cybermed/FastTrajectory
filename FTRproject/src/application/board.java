@@ -4,29 +4,153 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
 public class board {
 
-	static int x = 5;
-	static int numOfMap = 2;
-
-	public static GridNode[][] initial() {
+	static int x = 10;
+	static int numOfMap = 9;
+	// A function used by DFS 
+//    void DFSUtil(GridNode[][] map, int A, boolean  visited[] ) 
+//    { 
+//        // Mark the current node as visited and print it 
+//        visited[A] = true; 
+//        System.out.print(A+" "); 
+//  
+//        // Recur for all the vertices adjacent to this vertex 
+//        Iterator<GridNode> i = adj[A].listIterator(); 
+//        while (i.hasNext()) 
+//        { 
+//            int n = i.next(); 
+//            if (!visited[n]) 
+//                DFSUtil(n,visited); 
+//        } 
+//    } 
+//  
+//    // The function to do DFS traversal. It uses recursive DFSUtil() 
+//    GridNode[][] DFS(GridNode[][] map, GridNode A) 
+//    { 
+//        // Mark all the vertices as not visited(set as 
+//        // false by default in java) 
+//    		int si = map.length-1;
+//    		int a = A.getnID();
+//        boolean visited[] = new boolean[si]; 
+//  
+//        // Call the recursive helper function to print DFS traversal 
+//        // starting from all vertices one by one 
+//        for (int i=0; i<si; ++i) 
+//            if (visited[i] == false) 
+//                DFSUtil(map,i, visited); 
+//    } 
+	static void DFSUtil(GridNode A,boolean visited[], GridNode[][] map) 
+	    { 
+	        // Mark the current node as visited and print it 
+	        visited[A.getnID()] = true; 
+//	        System.out.print(v+" "); 
+	  
+	        // Recur for all the vertices adjacent to this vertex 
+//	        Iterator<GridNode> i = adj[v].listIterator(); 
+	        ArrayList<GridNode> adj = ADJ(map,A);
+	        for (int i = 0; i < adj.size(); i++) {
+	        	//visiting nebor
+	        		GridNode n = adj.get(i);
+	        		n.setStatus("_");
+				if (Math.random() <= 0.3) {
+					n.setStatus("X");
+				}
+				visited[n.getnID()] = true;
+				DFSUtil(n,visited, map);
+	        	
+	        }
+			
+	        
+//	        while (i.hasNext()) 
+//	        { 
+//	            int n = i.next(); 
+//	            if (!visited[n]) 
+//	                DFSUtil(n, visited); 
+//	        } 
+	    } 
+	  
+		public static ArrayList<GridNode> ADJ(GridNode[][] gridMap, GridNode curr) {
+			ArrayList<GridNode> adjacent = new ArrayList<GridNode>();
+			int x = gridMap.length;
+			if (curr.getX() + 1 < x)  {
+				adjacent.add(gridMap[curr.getX() + 1][curr.getY()]);
+				
+			}
+			if (curr.getX() - 1 >= 0) {
+				adjacent.add(gridMap[curr.getX() - 1][curr.getY()]);
+			}
+			if (curr.getY() - 1 >= 0 ) {
+				adjacent.add(gridMap[curr.getX()][curr.getY() - 1]);
+			}
+			if (curr.getY() + 1 < x) {
+				adjacent.add(gridMap[curr.getX()][curr.getY() + 1]);
+			}
+			return adjacent;
+		}
+	    // The function to do DFS traversal. It uses recursive DFSUtil() 
+	    static GridNode[][] DFS(GridNode A, GridNode[][] map) 
+	    { 
+	        // Mark all the vertices as not visited(set as 
+	        // false by default in java) 
+	        boolean visited[] = new boolean[x*x]; 
+	  
+	        // Call the recursive helper function to print DFS traversal 
+	        DFSUtil(A, visited, map); 
+	        return map;
+	    } 
+    public static GridNode[][] initial() {
 		GridNode[][] gridBoard = new GridNode[x][x];
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < x; j++) {
 				GridNode n = new GridNode(i, j, "_");
-				if (Math.random() <= 0.3) {
-					n.setStatus("X");
-				}
+//				if (Math.random() <= 0.3) {
+//					n.setStatus("X");
+//				}
 				gridBoard[i][j] = n;
 			}
 		}
-		randomAT(gridBoard,"A").setStatus("A");
-		randomAT(gridBoard,"T").setStatus("T");
+		//set A first
+		Random r = new Random();
+		GridNode A = gridBoard[0][0];
+		A.setStatus("A");
+		//DFS 
+		gridBoard = DFS(A, gridBoard);
+//		for (int i = 0; i < x; i++) {
+//			for (int j = 0; j < x; j++) {
+//				GridNode n = new GridNode(i, j, "_");
+//				if (Math.random() <= 0.3) {
+//					n.setStatus("X");
+//				}
+//				gridBoard[i][j] = n;
+//			}
+//		}
+//		randomAT(gridBoard,"A").setStatus("A");
+//		randomAT(gridBoard,"T").setStatus("T");
 		return gridBoard;
 	}
+    
+    
+//	public static GridNode[][] initial() {
+//		GridNode[][] gridBoard = new GridNode[x][x];
+//		for (int i = 0; i < x; i++) {
+//			for (int j = 0; j < x; j++) {
+//				GridNode n = new GridNode(i, j, "_");
+//				if (Math.random() <= 0.3) {
+//					n.setStatus("X");
+//				}
+//				gridBoard[i][j] = n;
+//			}
+//		}
+//		randomAT(gridBoard,"A").setStatus("A");
+//		randomAT(gridBoard,"T").setStatus("T");
+//		return gridBoard;
+//	}
 
 	public static GridNode randomAT(GridNode[][] gridBoard, String AT) {
 		Random r = new Random();
@@ -162,10 +286,10 @@ public class board {
 //		/*
 //		Generate new maps
 //		*/
-//		for (int i = numOfMap; i <= numOfMap; i++) {
-//			GridNode[][] gridBoard = initial();
-//			FileOut(gridBoard, i);
-//		}
+		for (int i = numOfMap; i <= numOfMap; i++) {
+			GridNode[][] gridBoard = initial();
+			FileOut(gridBoard, i);
+		}
 		
 //		Scanner sc = new Scanner(System.in);
 //		int n = sc.nextInt();
