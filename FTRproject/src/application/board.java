@@ -92,6 +92,8 @@ public class board {
 //				}
 				System.out.print("ID:"+gridBoard[i][j].getnID());
 				System.out.print(" h"+gridBoard[i][j].getH()+"   ");
+				System.out.print(" g"+gridBoard[i][j].getG()+"   ");
+
 			}
 //			System.out.print(i);
 			System.out.println();
