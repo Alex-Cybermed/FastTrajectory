@@ -47,7 +47,6 @@ public class ForwardAStar {
 			// openList.printHeap();
 			setBlocked(ADJ(gridMap, ptr));
 			resetVisited(gridMap);
-			p("Ptr = "+ ptr.getnID());
 			ComputerPath(gridMap, ptr, T);
 			// board.printAIMap(gridMap);
 //			System.out.print("Before check empty:");

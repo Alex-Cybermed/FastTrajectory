@@ -10,9 +10,21 @@ import java.util.Scanner;
 
 public class board {
 
-	static int x = 5;
+	static int x = 101;
 	static int numOfMap = 10;
-
+	//new
+	public static GridNode[][] ini() {
+		GridNode[][] gridBoard = new GridNode[x][x];
+		randomAT(gridBoard,"A").setStatus("A");
+		GridNode A = randomAT(gridBoard,"A");
+		ForwardA fa = new ForwardA();
+		fa.forwardA(gridBoard, A);
+		return gridBoard;
+	}
+	
+	
+	
+	//old
 	public static GridNode[][] initial() {
 		GridNode[][] gridBoard = new GridNode[x][x];
 		for (int i = 0; i < x; i++) {
@@ -153,6 +165,7 @@ public class board {
 	public static void main(String[] args) throws IOException {
 		long startTime = System.nanoTime();
 		ForwardAStar fa = new ForwardAStar();
+		
 //		/*
 //		Generate new maps
 //		*/
@@ -160,14 +173,15 @@ public class board {
 //			GridNode[][] gridBoard = initial();
 //			FileOut(gridBoard, i);
 //		}
-//		
+		
 //		Scanner sc = new Scanner(System.in);
 //		int n = sc.nextInt();
 		int n = 103;
+//		System.out.println("Input the number of map you want to test:" + n);
 		String fileAddress = "src/TestCases/Test" + n + ".txt";
 		GridNode[][] out = fileIn(fileAddress);
 		fa.forwardA(out);
-//		printMap(out);
+//		printAIMap(out);
 //		System.out.println(out.length);
 //		sc.close();
 //		long startTime = System.nanoTime();
