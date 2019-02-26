@@ -1,19 +1,16 @@
 package application;
-//new
 
 import java.util.ArrayList;
 
-import application.DoubleLL;
-
-public class ForwardA {
+public class BackwardAStar {
 	public BH<GridNode> openList = new BH<GridNode>();
 	public DoubleLL<GridNode> closeList = new DoubleLL<GridNode>();
 	public int counter = 0;
 	public int cost = 1;
 	public Integer Inf = Integer.MAX_VALUE;
 
-	public void forwardA(GridNode[][] gridMap, GridNode A) {
-//		GridNode A = new GridNode(0, 0, null);
+	public void Backward(GridNode[][] gridMap) {
+		GridNode A = new GridNode(0, 0, null);
 		GridNode T = new GridNode(0, 0, null);
 		for (int i = 0; i < gridMap.length; i++) {
 			for (int j = 0; j < gridMap.length; j++) {
@@ -28,106 +25,68 @@ public class ForwardA {
 			}
 		}
 		GridNode ptr = new GridNode(0, 0, null);
+		GridNode computerPTR = new GridNode(0, 0, null);
+		computerPTR = T;
 		ptr = A;
-		setHvalue(gridMap, T);
+		setHvalue(gridMap, A);
 		while (ptr.getnID() != T.getnID()) {
-//			p("===========================================================================================");
-//			p("=======================================New Procedure=======================================");
-//			p("===========================================================================================");
 			counter = counter + 1;
-//			resetGvalue(gridMap);
-			ptr.setG(0);
-			ptr.setSearch(counter);
-			T.setG(Inf);
-			T.setSearch(counter);
+			computerPTR.setG(0);
+			computerPTR.setSearch(counter);
+			A.setG(Inf);
+			A.setSearch(counter);
 			openList.clear();
 			closeList.reset();
-			ptr.setF(ptr.getG() + ptr.getH());
-			openList.insert(ptr);
+			computerPTR.setF(computerPTR.getG() + computerPTR.getH());
+			openList.insert(computerPTR);
 			// openList.printHeap();
 			setBlocked(ADJ(gridMap, ptr));
 			resetVisited(gridMap);
-			ComputerPath(gridMap, ptr, T);
-			// board.printAIMap(gridMap);
-//			System.out.print("Before check empty:");
-//			openList.printHeap();
+			ComputerPath(gridMap, computerPTR, A);
 			if (openList.size() == 0) {
-//				System.out.print("After check empty:");
-//				openList.printHeap();
-//				closeList.iterateForward();
 				System.out.println("Fail");
 				return;
 			}
-			// wonderland loop
-//			DoubleLL<GridNode>.Node n = closeList.head;
-//			for (n = closeList.head; !n.next.element.getStatus().equals("X"); n = n.next) {
-//				setBlocked(ADJ(gridMap, ptr));
-//				ptr = n.element;
-//				System.out.println("========wonderland=========");
-//				board.printAIMap(gridMap, ptr);
-//				System.out.println("========wonderland END=====");
-//
-//			}
-//			GridNode m = closeList.tail.element;
-//			p("THE PATH:");
-//			while (m.getParent() != null) {
-//				p(m.getParent().getnID() + "");
-//				m = m.getParent();
-//			}
-//			while(m.prev.element.getParent()!=null) {
-//				
-//				p("888888 "+m.element.getnID()+" ");
-//				m = m.element.getParent();
-//			}
-//			p("Print wonderland loop XXXXXXXXXXXXXXXXXX");
-//			while (n != null) {
-//				System.out.println("node: " + n.element.getnID() + " " + " Parent: " + n.element.getParent() + "");
-//				n = n.next;
-//			}
-
-			ArrayList<GridNode> path = new ArrayList<GridNode>();
 			GridNode L = closeList.tail.element;
-//			p(path.size()+"");
-//			for (int u = 0; u < path.size(); u++) {
-//				p(path.get(u) + "");
-//			}
-			while (L != null) {
-//				p(L.getnID()+"");
-				path.add(L);
+			while (L != null && !L.getStatus().equals("X")) {
+//				p("ptr: "+ptr.getnID());
+				ptr = L;
+//				ptr.setStatus("*");
 				L = L.getParent();
 			}
-//			p("++++++======++++++======++++++======++++++======");
-			
-			for (int pt = path.size() - 1; pt >= 0; pt--) {
-				if (path.get(pt).getStatus().equals("X")) {
-					break;
-				} else {
-					ptr = path.get(pt);
-				}
-			}
-			
+//			closeList.iterateForward();
+//			GridNode p = closeList.tail.element;
+//			while(p!=null) {
+//				p(p.getnID()+" "+p.getStatus());
+//				p = p.getParent();
+//			}
+
+
 //			p("");
 //			p("=============Beginning of Last Call================");
-//			board.printAIMap(gridMap, ptr);
+//			board.printAIMap(gridMap, ptr,T);
 //			p("=========================END=======================");
 //			p("");
 //			int len = gridMap.length;
 //			p("length is "+len);
-			if(ptr.getH()==1) {
+			if (ptr.getG() == 0) {
+				board.printAIMap(gridMap, ptr, T);
 				break;
 			}
+//			p(ptr.getnID()+"");
+//			break;
 		}
 		System.out.println("success");
 
 	}
 
-	public void ComputerPath(GridNode[][] gridMap, GridNode ptr, GridNode T) {
+	public void ComputerPath(GridNode[][] gridMap, GridNode ptr, GridNode Target) {
 //		p("");
 //		p("=============Beginning of ComputerPath=============");
 //		board.printAIMap(gridMap, ptr);
 //		p("=========================END=======================");
 //		p("");
-		while (T.getG() > openList.getByIndex(0).getF()) {
+		while (Target.getG() > openList.getByIndex(0).getF()) {
 //			System.out.println("Print Heap at the beginning of ComputerPath: ");
 //			openList.printHeap();
 //			System.out.println("IN WHILE LOOP");
@@ -154,8 +113,8 @@ public class ForwardA {
 //			p("");
 			for (int i = 0; i < adj.size(); i++) {
 				if (adj.get(i).isVisited() || adj.get(i).isBlocked()) {
-					if(i==(adj.size()-1)) {
-						if(openList.size()==0) {
+					if (i == (adj.size() - 1)) {
+						if (openList.size() == 0) {
 							return;
 						}
 					}
@@ -185,7 +144,6 @@ public class ForwardA {
 //							System.out.println("================End======================");
 //							p("");
 
-
 						}
 					}
 				}
@@ -200,7 +158,7 @@ public class ForwardA {
 			}
 		}
 	}
-	
+
 //	public void
 
 	public void resetVisited(GridNode[][] gridMap) {
@@ -230,12 +188,14 @@ public class ForwardA {
 
 	public void setHvalue(GridNode[][] gridMap, GridNode Target) {
 		int rowNum, colNum;
+//		GridNode parent = new GridNode(-1, "_");
 		for (int i = 0; i < gridMap.length; i++) {
 			for (int j = 0; j < gridMap.length; j++) {
 				gridMap[i][j].setBlocked(false);
 				rowNum = Math.abs(Target.getX() - i);
 				colNum = Math.abs(Target.getY() - j);
 				gridMap[i][j].setH(rowNum + colNum);
+//				gridMap[i][j].setParent(parent);
 			}
 		}
 	}
@@ -261,6 +221,4 @@ public class ForwardA {
 	public static void p(String s) {
 		System.out.println(s);
 	}
-
-	
 }

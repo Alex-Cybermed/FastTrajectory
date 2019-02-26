@@ -21,6 +21,11 @@ public class GridNode {
 		this.Y = Y;
 		this.status = string;
 	}
+	
+	public GridNode(int nID, String string) {
+		this.nID=nID;
+		this.status = string;
+	}
 
 	public GridNode(int nID, int X, int Y, String status, boolean visited, GridNode parent, int g, int f, int h, int search) {
 		this.X = X;
