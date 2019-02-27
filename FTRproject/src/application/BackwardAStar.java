@@ -84,7 +84,7 @@ public class BackwardAStar {
 //			p(ptr.getnID()+"");
 //			break;
 		}
-		System.out.println("success");
+		System.out.println("Backward A* Search success!");
 
 	}
 
