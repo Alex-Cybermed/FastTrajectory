@@ -45,7 +45,13 @@ public class ForwardAStar {
 			ptr.setF(ptr.getG() + ptr.getH());
 			openList.insert(ptr);
 			// openList.printHeap();
-			setBlocked(ADJ(gridMap, ptr));
+			ArrayList<GridNode> adj = ADJ(gridMap, ptr);
+			System.out.println("before ADJ = "+adj.toString());
+			setBlocked(adj);
+			sort(adj, 0, adj.size()-1);
+			System.out.println("after  ADJ = "+adj.toString());
+			
+			
 			resetVisited(gridMap);
 			ComputerPath(gridMap, ptr, T);
 //			board.printAIMap(gridMap, ptr,T);
@@ -265,4 +271,48 @@ public class ForwardAStar {
 	public static void p(String s) {
 		System.out.println(s);
 	}
+	  static void  sort(ArrayList<GridNode> arr, int low, int high) 
+	    { 
+	        if (low < high) 
+	        { 
+	            /* pi is partitioning index, arr[pi] is  
+	              now at right place */
+	            int pi = partition(arr, low, high); 
+	  
+	            // Recursively sort elements before 
+	            // partition and after partition 
+	            sort(arr, low, pi-1); 
+	            sort(arr, pi+1, high); 
+	            
+	        } 
+	    } 
+	  static int partition(ArrayList<GridNode> arr, int low, int high) 
+	    { 
+	        int pivot = arr.get(high).getG();  
+	        
+	        int i = (low-1); // index of smaller element 
+	      
+	        for (int j=low; j<high; j++) 
+	        { 
+	            // If current element is smaller than or 
+	            // equal to pivot 
+	            if (arr.get(j).getG() <= pivot) 
+	            { 
+	                i++; 
+	  
+	                // swap arr[i] and arr[j] 
+	                GridNode temp = arr.get(i); 
+	                arr.set(i, arr.get(j)); 
+	                arr.set(j, temp); 
+	            } 
+	        } 
+	  
+	        // swap arr[i+1] and arr[high] (or pivot) 
+	        GridNode temp = arr.get(i+1); 
+	        arr.set(i+1, arr.get(high));
+	        arr.set(high, temp);
+
+	  
+	        return i+1; 
+	    } 
 }

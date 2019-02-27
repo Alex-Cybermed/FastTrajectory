@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 public class board {
 
-	static int x = 1001;
-	static int numOfMap = 4;
+	static int x = 5;
+	static int numOfMap = 2;
 
 	static void DFSUtil(GridNode curr, boolean visited[], GridNode[][] map, ArrayList<GridNode> vert) {
 		printMap(map);

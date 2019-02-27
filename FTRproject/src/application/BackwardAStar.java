@@ -45,9 +45,8 @@ public class BackwardAStar {
 			// openList.printHeap();
 			ArrayList<GridNode> adj =ADJ(gridMap, ptr);
 			setBlocked(adj);
-			sort(adj, 0, adj.size()-1);
-
-			System.out.println("adj list ="+ adj.toString());
+//			sort(adj, 0, adj.size()-1);
+//			System.out.println("adj list ="+ adj.toString());
 			resetVisited(gridMap);
 			ComputerPath(gridMap, computerPTR, A);
 			if (openList.size() == 0) {
